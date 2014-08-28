@@ -15,12 +15,17 @@
 		8720A8A519AF08FC00F4C5C7 /* ALIENAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8720A8A419AF08FC00F4C5C7 /* ALIENAppDelegate.m */; };
 		8720A8A819AF08FC00F4C5C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8720A8A619AF08FC00F4C5C7 /* Main.storyboard */; };
 		8720A8AB19AF08FC00F4C5C7 /* ALIENViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8720A8AA19AF08FC00F4C5C7 /* ALIENViewController.m */; };
-		8720A8AD19AF08FC00F4C5C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8720A8AC19AF08FC00F4C5C7 /* Images.xcassets */; };
 		8720A8B419AF08FD00F4C5C7 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8720A8B319AF08FD00F4C5C7 /* XCTest.framework */; };
 		8720A8B519AF08FD00F4C5C7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8720A89419AF08FC00F4C5C7 /* Foundation.framework */; };
 		8720A8B619AF08FD00F4C5C7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8720A89819AF08FC00F4C5C7 /* UIKit.framework */; };
 		8720A8BE19AF08FD00F4C5C7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8720A8BC19AF08FD00F4C5C7 /* InfoPlist.strings */; };
 		8720A8C019AF08FD00F4C5C7 /* ChatDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8720A8BF19AF08FD00F4C5C7 /* ChatDemoTests.m */; };
+		8720A8CB19AF095500F4C5C7 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8720A8CA19AF095500F4C5C7 /* ChatViewController.m */; };
+		8720A8D619AF11D300F4C5C7 /* LMMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8720A8D119AF11D300F4C5C7 /* LMMessage.m */; };
+		8720A8D719AF11D300F4C5C7 /* LMMessageFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8720A8D319AF11D300F4C5C7 /* LMMessageFrame.m */; };
+		8720A8D819AF11D300F4C5C7 /* LMTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8720A8D519AF11D300F4C5C7 /* LMTableViewCell.m */; };
+		8720A9EB19AF555A00F4C5C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8720A9EA19AF555A00F4C5C7 /* Images.xcassets */; };
+		8720A9ED19AF6B5A00F4C5C7 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8720A9EC19AF6B5A00F4C5C7 /* 1.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,12 +52,21 @@
 		8720A8A719AF08FC00F4C5C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8720A8A919AF08FC00F4C5C7 /* ALIENViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALIENViewController.h; sourceTree = "<group>"; };
 		8720A8AA19AF08FC00F4C5C7 /* ALIENViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALIENViewController.m; sourceTree = "<group>"; };
-		8720A8AC19AF08FC00F4C5C7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8720A8B219AF08FD00F4C5C7 /* ChatDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8720A8B319AF08FD00F4C5C7 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		8720A8BB19AF08FD00F4C5C7 /* ChatDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ChatDemoTests-Info.plist"; sourceTree = "<group>"; };
 		8720A8BD19AF08FD00F4C5C7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8720A8BF19AF08FD00F4C5C7 /* ChatDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatDemoTests.m; sourceTree = "<group>"; };
+		8720A8C919AF095500F4C5C7 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		8720A8CA19AF095500F4C5C7 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
+		8720A8D019AF11D300F4C5C7 /* LMMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMMessage.h; sourceTree = "<group>"; };
+		8720A8D119AF11D300F4C5C7 /* LMMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMMessage.m; sourceTree = "<group>"; };
+		8720A8D219AF11D300F4C5C7 /* LMMessageFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMMessageFrame.h; sourceTree = "<group>"; };
+		8720A8D319AF11D300F4C5C7 /* LMMessageFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMMessageFrame.m; sourceTree = "<group>"; };
+		8720A8D419AF11D300F4C5C7 /* LMTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMTableViewCell.h; sourceTree = "<group>"; };
+		8720A8D519AF11D300F4C5C7 /* LMTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMTableViewCell.m; sourceTree = "<group>"; };
+		8720A9EA19AF555A00F4C5C7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		8720A9EC19AF6B5A00F4C5C7 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +96,8 @@
 		8720A88819AF08FC00F4C5C7 = {
 			isa = PBXGroup;
 			children = (
+				8720A9EC19AF6B5A00F4C5C7 /* 1.png */,
+				8720A8CF19AF11D300F4C5C7 /* ChatHelper */,
 				8720A89A19AF08FC00F4C5C7 /* ChatDemo */,
 				8720A8B919AF08FD00F4C5C7 /* ChatDemoTests */,
 				8720A89319AF08FC00F4C5C7 /* Frameworks */,
@@ -117,7 +133,8 @@
 				8720A8A619AF08FC00F4C5C7 /* Main.storyboard */,
 				8720A8A919AF08FC00F4C5C7 /* ALIENViewController.h */,
 				8720A8AA19AF08FC00F4C5C7 /* ALIENViewController.m */,
-				8720A8AC19AF08FC00F4C5C7 /* Images.xcassets */,
+				8720A8C919AF095500F4C5C7 /* ChatViewController.h */,
+				8720A8CA19AF095500F4C5C7 /* ChatViewController.m */,
 				8720A89B19AF08FC00F4C5C7 /* Supporting Files */,
 			);
 			path = ChatDemo;
@@ -126,6 +143,7 @@
 		8720A89B19AF08FC00F4C5C7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8720A9EA19AF555A00F4C5C7 /* Images.xcassets */,
 				8720A89C19AF08FC00F4C5C7 /* ChatDemo-Info.plist */,
 				8720A89D19AF08FC00F4C5C7 /* InfoPlist.strings */,
 				8720A8A019AF08FC00F4C5C7 /* main.m */,
@@ -150,6 +168,19 @@
 				8720A8BC19AF08FD00F4C5C7 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8720A8CF19AF11D300F4C5C7 /* ChatHelper */ = {
+			isa = PBXGroup;
+			children = (
+				8720A8D019AF11D300F4C5C7 /* LMMessage.h */,
+				8720A8D119AF11D300F4C5C7 /* LMMessage.m */,
+				8720A8D219AF11D300F4C5C7 /* LMMessageFrame.h */,
+				8720A8D319AF11D300F4C5C7 /* LMMessageFrame.m */,
+				8720A8D419AF11D300F4C5C7 /* LMTableViewCell.h */,
+				8720A8D519AF11D300F4C5C7 /* LMTableViewCell.m */,
+			);
+			path = ChatHelper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -229,7 +260,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8720A8AD19AF08FC00F4C5C7 /* Images.xcassets in Resources */,
+				8720A9EB19AF555A00F4C5C7 /* Images.xcassets in Resources */,
+				8720A9ED19AF6B5A00F4C5C7 /* 1.png in Resources */,
 				8720A89F19AF08FC00F4C5C7 /* InfoPlist.strings in Resources */,
 				8720A8A819AF08FC00F4C5C7 /* Main.storyboard in Resources */,
 			);
@@ -250,8 +282,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8720A8D819AF11D300F4C5C7 /* LMTableViewCell.m in Sources */,
 				8720A8A519AF08FC00F4C5C7 /* ALIENAppDelegate.m in Sources */,
 				8720A8A119AF08FC00F4C5C7 /* main.m in Sources */,
+				8720A8D719AF11D300F4C5C7 /* LMMessageFrame.m in Sources */,
+				8720A8D619AF11D300F4C5C7 /* LMMessage.m in Sources */,
+				8720A8CB19AF095500F4C5C7 /* ChatViewController.m in Sources */,
 				8720A8AB19AF08FC00F4C5C7 /* ALIENViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -457,6 +493,7 @@
 				8720A8C519AF08FD00F4C5C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8720A8C619AF08FD00F4C5C7 /* Build configuration list for PBXNativeTarget "ChatDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -465,6 +502,7 @@
 				8720A8C819AF08FD00F4C5C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
