@@ -32,16 +32,40 @@
 }
 -(instancetype)initWithContent:(NSDictionary*)dictionary
 {
-    self = [[LMMessage alloc] init];
+    if (!self) {
+        self = [[LMMessage alloc] init];
+    }
+    
+//    头像
     NSString *avatarName = dictionary[@"avatar"];
     
+#warning 此处应该改为加载一个头像URL地址
     self.avatar = [UIImage imageNamed:avatarName];
     
-    self.time = dictionary[@"time"];
-    self.text = dictionary[@"text"];
-    self.originalImageUrl  = dictionary[@"originalImageUrl"];
-    self.messageType = [dictionary[@"messageType"] intValue];
+//    消息类型
+    if(!dictionary[@"messageType"]){
+        NSAssert(!dictionary[@"messageType"], @"messageType can't be nil");
 
+    }
+    self.messageType = [dictionary[@"messageType"] intValue];
+    
+//   时间
+    if (dictionary[@"time"]) {
+        self.time = dictionary[@"time"];
+    }
+// 如果是文字
+    
+    if (dictionary[@"text"]) {
+        self.text = dictionary[@"text"];
+    }
+//如果是图片
+    if(dictionary[@"image"]){
+#warning 此处应该改为图片URL地址
+        NSString *imageString =  dictionary[@"image"];
+        self.image = [UIImage imageNamed:imageString];
+        self.originalImageUrl  = dictionary[@"originalImageUrl"];
+    }
+    
     return self;
 }
 

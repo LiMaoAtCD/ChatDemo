@@ -29,6 +29,7 @@
 		8720A9F119B068F100F4C5C7 /* tal_box_bk@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8720A9F019B068F100F4C5C7 /* tal_box_bk@2x.png */; };
 		8720A9F319B06E9900F4C5C7 /* tal_box_bk_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8720A9F219B06E9900F4C5C7 /* tal_box_bk_1@2x.png */; };
 		8720A9F919B075A200F4C5C7 /* scene.png in Resources */ = {isa = PBXBuildFile; fileRef = 8720A9F819B075A200F4C5C7 /* scene.png */; };
+		8720A9FD19B0AD7000F4C5C7 /* ALIENKeyBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8720A9FC19B0AD7000F4C5C7 /* ALIENKeyBoardView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,8 @@
 		8720A9F019B068F100F4C5C7 /* tal_box_bk@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tal_box_bk@2x.png"; sourceTree = "<group>"; };
 		8720A9F219B06E9900F4C5C7 /* tal_box_bk_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tal_box_bk_1@2x.png"; sourceTree = "<group>"; };
 		8720A9F819B075A200F4C5C7 /* scene.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scene.png; sourceTree = "<group>"; };
+		8720A9FB19B0AD7000F4C5C7 /* ALIENKeyBoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALIENKeyBoardView.h; sourceTree = "<group>"; };
+		8720A9FC19B0AD7000F4C5C7 /* ALIENKeyBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALIENKeyBoardView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +147,8 @@
 				8720A8AA19AF08FC00F4C5C7 /* ALIENViewController.m */,
 				8720A8C919AF095500F4C5C7 /* ChatViewController.h */,
 				8720A8CA19AF095500F4C5C7 /* ChatViewController.m */,
+				8720A9FB19B0AD7000F4C5C7 /* ALIENKeyBoardView.h */,
+				8720A9FC19B0AD7000F4C5C7 /* ALIENKeyBoardView.m */,
 				8720A89B19AF08FC00F4C5C7 /* Supporting Files */,
 			);
 			path = ChatDemo;
@@ -297,6 +302,7 @@
 				8720A8D819AF11D300F4C5C7 /* LMTableViewCell.m in Sources */,
 				8720A8A519AF08FC00F4C5C7 /* ALIENAppDelegate.m in Sources */,
 				8720A8A119AF08FC00F4C5C7 /* main.m in Sources */,
+				8720A9FD19B0AD7000F4C5C7 /* ALIENKeyBoardView.m in Sources */,
 				8720A8D719AF11D300F4C5C7 /* LMMessageFrame.m in Sources */,
 				8720A8D619AF11D300F4C5C7 /* LMMessage.m in Sources */,
 				8720A8CB19AF095500F4C5C7 /* ChatViewController.m in Sources */,

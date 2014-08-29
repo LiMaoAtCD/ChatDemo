@@ -61,6 +61,7 @@
     return self;
 }
 
+
 - (void)setMessageFrame:(LMMessageFrame *)messageFrame{
     
     _messageFrame = messageFrame;
@@ -77,16 +78,7 @@
     avatar.layer.masksToBounds = YES;
     
     [self.contentView addSubview:avatar];
-    
-    
-    
-//    //创建图片内容
-//    contentImage =[[UIImageView alloc] init];
-//    [contentImage setHidden:YES];
-//    
-//    [_contentBtn addSubview:contentImage];
-//    
-//
+
     
 //     3、设置内容
     switch (message.messageType) {
@@ -95,10 +87,10 @@
 //            设置tag
             _contentBtn.tag = MessageFromMe;
 //            设置内容
-            [_contentBtn setTitle:message.text forState:UIControlStateNormal];
+            [self setCellContent:message on:_contentBtn];
 //            设置内容frame
             _contentBtn.frame = _messageFrame.contentFrame;
-            _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop+5., kContentRight, kContentBottom, kContentLeft);
+            _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentLabelTop, kContentLabelLeft, kContentLabelBottom, kContentLabelRight);
             
             UIImage *backGroundImage =[UIImage imageNamed:@"tal_box_bk_1"];
             UIEdgeInsets insets =UIEdgeInsetsMake(18, 7, 5, 19);
@@ -112,11 +104,10 @@
         {
             _contentBtn.tag = MessageFromOther;
             
-            [_contentBtn setTitle:message.text forState:UIControlStateNormal];
-           
+            [self setCellContent:message on:_contentBtn];
             _contentBtn.frame = _messageFrame.contentFrame;
             
-            _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentLeft, kContentBottom, kContentRight);
+            _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentLabelTop, kContentLabelLeft, kContentLabelBottom, kContentLabelRight);
             
             UIImage *normal=[UIImage imageNamed:@"tal_box_bk"];
             UIEdgeInsets insets =UIEdgeInsetsMake(18, 19, 5, 7);
@@ -128,50 +119,48 @@
         case ImageFromMe:
         {
             _contentBtn.tag = ImageFromMe;
-            _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentRight, kContentBottom, kContentLeft);
             
-            _contentBtn.frame = CGRectMake(100, _messageFrame.contentFrame.origin.y, 200, 300);
-            [contentImage setFrame:CGRectMake(10, 10, 170, 270)];
-            [contentImage setHidden:NO];
-            [contentImage setImage:message.image];
-            float Height = CGImageGetHeight(message.image.CGImage);
-            float Width  = CGImageGetWidth(message.image.CGImage);
-            if (Width>20) {
-                float apl = Height/Width;
-                [contentImage setFrame:CGRectMake(10, 10, 100, apl*100)];
-                _contentBtn.frame = CGRectMake(100, _messageFrame.contentFrame.origin.y, 130, apl*100+20);
-            }
+            [self setCellContent:message on:_contentBtn];
+            
+            
+            _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentImageTop, kContentImageLeft, kContentImageBottom, kContentImageRight+2);
+            
+            _contentBtn.frame = _messageFrame.contentFrame;
+            
+            
 
-            UIImage *normal = [UIImage imageNamed:@"IMFromMe"];
-            UIEdgeInsets insets =UIEdgeInsetsMake(25, 25, 25, 25);
-            normal = [normal resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
+//            添加背景
+            UIImage *backGroundImage =[UIImage imageNamed:@"tal_box_bk_1"];
+            UIEdgeInsets insets =UIEdgeInsetsMake(18, 7, 5, 19);
+            backGroundImage = [backGroundImage resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
             
-            [_contentBtn setBackgroundImage:normal forState:UIControlStateNormal];
+            //            设置背景颜色（一张图片）
+            [_contentBtn setBackgroundImage:backGroundImage forState:UIControlStateNormal];
            
         }
             break;
         case ImageFromOther:
         {
             _contentBtn.tag = ImageFromOther;
+            [self setCellContent:message on:_contentBtn];
             
-            _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentLeft, kContentBottom, kContentRight);
-            _contentBtn.frame = CGRectMake(_messageFrame.contentFrame.origin.x, _messageFrame.contentFrame.origin.y, 130, 150);
-            [contentImage setFrame:CGRectMake(20, 10, 110, 110)];
-            [contentImage setTag:911];
-            [contentImage setHidden:NO];
+             _contentBtn.frame = _messageFrame.contentFrame;
+            _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentImageTop, kContentImageLeft+2, kContentImageBottom, kContentImageRight);
+           
 
-            UIImage *normal ;
-            normal = [UIImage imageNamed:@"IMFromOther"];
-            normal = [normal stretchableImageWithLeftCapWidth:normal.size.width * 0.5 topCapHeight:normal.size.height * 0.7];
             
+            UIImage *normal=[UIImage imageNamed:@"tal_box_bk"];
+            UIEdgeInsets insets =UIEdgeInsetsMake(18, 19, 5, 7);
+            normal = [normal resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
             [_contentBtn setBackgroundImage:normal forState:UIControlStateNormal];
+
 
         }
             break;
         case AudioFromMe:
         {
             _contentBtn.tag = AudioFromMe;
-            _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentLeft, kContentBottom, kContentRight);
+//            _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentLeft, kContentBottom, kContentRight);
             _contentBtn.frame = CGRectMake(_messageFrame.contentFrame.origin.x+80, _messageFrame.contentFrame.origin.y+2, 200, 40);
             
             UIImage *normal;
@@ -195,7 +184,7 @@
             break;
         case AudioFromOther:
         {
-            _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentLeft, kContentBottom, kContentRight);
+//            _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentLeft, kContentBottom, kContentRight);
             _contentBtn.frame = CGRectMake(_messageFrame.contentFrame.origin.x-45, _messageFrame.contentFrame.origin.y, 200, 35);
             [[_contentBtn viewWithTag:911] removeFromSuperview];
             UIImage *normal ;
@@ -254,6 +243,20 @@
     }
 }
 
+
+
+-(void)setCellContent:(LMMessage*)message on:(UIButton*)button{
+    if (button.tag == MessageFromMe||
+        button.tag == MessageFromOther) {
+        [button setTitle:message.text forState:UIControlStateNormal];
+        [button setImage:nil forState:UIControlStateNormal];
+    }else if(button.tag ==ImageFromMe||
+             button.tag == ImageFromOther ){
+        [button setTitle:nil forState:UIControlStateNormal];
+        [button setImage:message.image forState:UIControlStateNormal];
+
+    }
+}
 
 
 @end

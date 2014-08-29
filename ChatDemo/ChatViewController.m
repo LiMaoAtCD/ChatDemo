@@ -12,12 +12,13 @@
 #import "LMMessage.h"
 @interface ChatViewController ()<UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic,strong)UITableView *tableView;
+@property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *DataModel;
-@property (nonatomic,strong)LMMessageFrame *messageFrame;
-@property (nonatomic,strong)LMMessageFrame *tempMessageFrame;
-@property (nonatomic,strong)LMMessage *message;
+@property (nonatomic,strong) LMMessageFrame *messageFrame;
+@property (nonatomic,strong) LMMessageFrame *tempMessageFrame;
+@property (nonatomic,strong) LMMessage *message;
 
+@property (strong, nonatomic) IBOutlet UIView *keyBoardView;
 
 @property (nonatomic,strong)NSMutableArray *cellHeightArray;
 @property (nonatomic,strong)NSMutableArray *cellMessageArray;
@@ -27,7 +28,7 @@
 @implementation ChatViewController
 
 static NSString *reuserIdentifier = @"Cell";
-
+static const int keyBoardHeight = 44.0;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -46,16 +47,24 @@ static NSString *reuserIdentifier = @"Cell";
     
     [self.view addSubview:backGroundImage];
     
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height-keyBoardHeight) style:UITableViewStylePlain];
     self.tableView.backgroundColor = [UIColor clearColor];
     [self.tableView registerClass:[LMTableViewCell class]forCellReuseIdentifier:reuserIdentifier];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.showsVerticalScrollIndicator = NO;
-    self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 44, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
     
     [self.view addSubview:self.tableView];
+    
+    
+    self.keyBoardView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height -keyBoardHeight, self.view.bounds.size.width, keyBoardHeight)];
+    self.keyBoardView.backgroundColor = [UIColor blueColor];
+    [self.view addSubview:self.keyBoardView];
+    
+    
+    
 
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -63,8 +72,6 @@ static NSString *reuserIdentifier = @"Cell";
     [super viewWillAppear:animated];
     [self setupDataModel];
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.cellMessageArray.count -1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-    
-
 }
 
 #pragma mark - setup dataModel
@@ -77,46 +84,53 @@ static NSString *reuserIdentifier = @"Cell";
                           },
                     @{@"text":@"dada014-08-2014-08-2014-08-2014-08-2014-08-2014-08-2014-08-2014-08-2",
                           @"time":@"2014-08-30",
-                          @"avatar":@"1"
+                          @"avatar":@"1",
+                          @"messageType":@"1"
                           },
                         @{@"text":@"3",
                           @"time":@"2014-08-29",
-                          @"avatar":@"1"
+                          @"avatar":@"1",
+                          @"messageType":@"1"
                           
                           },
                         @{@"text":@"4",
                           @"time":@"2014-08-29",
-                          @"avatar":@"1"
+                          @"avatar":@"1",
+                          @"messageType":@"1"
                           
                           },
                         @{@"text":@"5",
                           @"time":@"2014-08-29",
-                          @"avatar":@"1"
+                          @"avatar":@"1",
+                          @"messageType":@"1"
                           
                           },
                         @{@"text":@"6",
                           @"time":@"2014-08-29",
-                          @"avatar":@"1"
+                          @"avatar":@"1",
+                          @"messageType":@"1"
                           },
-                        @{@"text":@"dada014-08-2014-08-2014-08-2014-08-2014-08-2014-08-2014-08-2014-08-2",
+                    @{@"text":@"dada014-08-2014-08-2014-08-2014-08-2014-08-2014-08-2014-08-2014-08-2",
                           @"time":@"2014-08-30",
                           @"avatar":@"1",
                           @"messageType":@"1"
                           },
                         @{@"text":@"8",
                           @"time":@"2014-08-29",
-                          @"avatar":@"1"
+                          @"avatar":@"1",
+                          @"messageType":@"0"
                           
                           },
-                        @{@"text":@"9",
+                        @{@"image":@"scene",
                           @"time":@"2014-08-29",
-                          @"avatar":@"1"
+                          @"avatar":@"1",
+                          @"messageType":@"3"
                           
                           },
-                        @{@"text":@"10",
+                        @{@"image":@"scene",
                           @"time":@"2014-08-29",
-                          @"avatar":@"1"
-                          
+                          @"avatar":@"1",
+                          @"messageType":@"2"
                           }]mutableCopy];
     
     self.cellHeightArray = [NSMutableArray array];
@@ -134,7 +148,6 @@ static NSString *reuserIdentifier = @"Cell";
         _messageFrame.message = _message;
         [self.cellHeightArray addObject:@(_messageFrame.cellHeight)];
     }];
-
 }
 
 #pragma mark -dataSource
@@ -150,6 +163,7 @@ static NSString *reuserIdentifier = @"Cell";
 
     self.tempMessageFrame.message = self.cellMessageArray[indexPath.row];
     cell.messageFrame = self.tempMessageFrame;
+    
 
     return cell;
 }

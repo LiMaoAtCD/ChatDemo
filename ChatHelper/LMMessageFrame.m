@@ -60,10 +60,10 @@
             
             CGSize contentSize = [_message.text boundingRectWithSize:CGSizeMake(kContentW, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
             
-            CGFloat contentX = iconX - kMargin - contentSize.width - kContentLeft - kContentRight;
+            CGFloat contentX = iconX - kMargin - contentSize.width - kContentLabelLeft - kContentLabelRight;
             CGFloat contentY = iconY;
 
-            _contentFrame = CGRectMake(contentX, contentY, contentSize.width + kContentLeft + kContentRight, contentSize.height + kContentTop + kContentBottom);
+            _contentFrame = CGRectMake(contentX, contentY, contentSize.width + kContentLabelLeft + kContentLabelRight, contentSize.height + kContentLabelTop + kContentLabelBottom);
         }
             break;
         case MessageFromOther:{
@@ -74,30 +74,45 @@
             NSDictionary *attribute = @{NSFontAttributeName:kContentFont};
             CGSize contentSize = [_message.text boundingRectWithSize:CGSizeMake(kContentW, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
             
-            _contentFrame = CGRectMake(contentX, contentY, contentSize.width + kContentLeft + kContentRight, contentSize.height + kContentTop + kContentBottom);
+            _contentFrame = CGRectMake(contentX, contentY, contentSize.width + kContentLabelLeft + kContentLabelRight, contentSize.height + kContentLabelTop + kContentLabelBottom);
         }
             break;
         case ImageFromMe:
         {
             CGSize contentSize = _message.image.size;
+            //            如果图片尺寸宽大于屏幕一半，则设置为一半
+            if (contentSize.width >screenW/4) {
+                
+                contentSize.height = contentSize.height * screenW / (contentSize.width*4);
+                contentSize.width = screenW/4;
+            }
             
-            CGFloat contentX = iconX - kMargin - contentSize.width - kContentLeft - kContentRight;
-            CGFloat contentY =iconY;
+            
+            CGFloat contentX = iconX - kMargin - contentSize.width - kContentLabelLeft - kContentLabelRight;
+            CGFloat contentY = iconY;
 
-            _contentFrame = CGRectMake(contentX, contentY, contentSize.width + kContentLeft + kContentRight, contentSize.height + kContentTop + kContentBottom);
+            _contentFrame = CGRectMake(contentX, contentY, contentSize.width + kContentLabelLeft + kContentLabelRight+kContentImageLeft+kContentImageRight, contentSize.height + kContentLabelTop + kContentLabelBottom);
         }
             break;
             
         case ImageFromOther:
         {
+            
+             CGSize contentSize = _message.image.size;
+            //            如果图片尺寸宽大于屏幕一半，则设置为一半
+            if (contentSize.width >screenW/4) {
+                
+                contentSize.height = contentSize.height * screenW/ (contentSize.width*4);
+                contentSize.width = screenW/4;
+            }
+            
+            
             CGFloat contentX = CGRectGetMaxX(_avatarFrame) + kMargin;
             CGFloat contentY ;
 
                 contentY = iconY;
 
-
-            CGSize contentSize = _message.image.size;
-            _contentFrame = CGRectMake(contentX, contentY, contentSize.width + kContentLeft + kContentRight, contentSize.height + kContentTop + kContentBottom);
+            _contentFrame = CGRectMake(contentX, contentY, contentSize.width + kContentLabelLeft + kContentLabelRight+kContentImageLeft+kContentImageRight, contentSize.height + kContentLabelTop + kContentLabelBottom);
         }
             break;
         case AudioFromMe:{
@@ -115,9 +130,9 @@
     
     // 4、计算高度
     _cellHeight = MAX(CGRectGetMaxY(_contentFrame), CGRectGetMaxY(_avatarFrame))  + kMargin;
-    if (_message.messageType==ImageFromMe || _message.messageType==ImageFromOther) {
-        
-    _cellHeight = 220;
-    }
+//    if (_message.messageType==ImageFromMe || _message.messageType==ImageFromOther) {
+//        
+//    _cellHeight = 220;
+//    }
 }
 @end
