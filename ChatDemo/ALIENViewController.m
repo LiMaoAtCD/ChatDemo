@@ -27,7 +27,7 @@ static NSString * reuserIdentifier = @"Cell";
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    numberOfRow = [@[@2,@3,@2,@3,@2,@3,@2,@3,@2,@3,@2,@3,@2,@3,@2,@3,@2,@3,@2,@3,@2,@3,@2,@3,@2,@3,@2,@3]mutableCopy];
+    numberOfRow = [@[@2,@33]mutableCopy];
     
     [_list registerClass:[UITableViewCell class] forCellReuseIdentifier:reuserIdentifier];
     

@@ -26,6 +26,9 @@
 		8720A8D819AF11D300F4C5C7 /* LMTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8720A8D519AF11D300F4C5C7 /* LMTableViewCell.m */; };
 		8720A9EB19AF555A00F4C5C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8720A9EA19AF555A00F4C5C7 /* Images.xcassets */; };
 		8720A9ED19AF6B5A00F4C5C7 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8720A9EC19AF6B5A00F4C5C7 /* 1.png */; };
+		8720A9F119B068F100F4C5C7 /* tal_box_bk@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8720A9F019B068F100F4C5C7 /* tal_box_bk@2x.png */; };
+		8720A9F319B06E9900F4C5C7 /* tal_box_bk_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8720A9F219B06E9900F4C5C7 /* tal_box_bk_1@2x.png */; };
+		8720A9F919B075A200F4C5C7 /* scene.png in Resources */ = {isa = PBXBuildFile; fileRef = 8720A9F819B075A200F4C5C7 /* scene.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +70,9 @@
 		8720A8D519AF11D300F4C5C7 /* LMTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMTableViewCell.m; sourceTree = "<group>"; };
 		8720A9EA19AF555A00F4C5C7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8720A9EC19AF6B5A00F4C5C7 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		8720A9F019B068F100F4C5C7 /* tal_box_bk@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tal_box_bk@2x.png"; sourceTree = "<group>"; };
+		8720A9F219B06E9900F4C5C7 /* tal_box_bk_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tal_box_bk_1@2x.png"; sourceTree = "<group>"; };
+		8720A9F819B075A200F4C5C7 /* scene.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scene.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +102,9 @@
 		8720A88819AF08FC00F4C5C7 = {
 			isa = PBXGroup;
 			children = (
+				8720A9F819B075A200F4C5C7 /* scene.png */,
+				8720A9F219B06E9900F4C5C7 /* tal_box_bk_1@2x.png */,
+				8720A9F019B068F100F4C5C7 /* tal_box_bk@2x.png */,
 				8720A9EC19AF6B5A00F4C5C7 /* 1.png */,
 				8720A8CF19AF11D300F4C5C7 /* ChatHelper */,
 				8720A89A19AF08FC00F4C5C7 /* ChatDemo */,
@@ -263,7 +272,10 @@
 				8720A9EB19AF555A00F4C5C7 /* Images.xcassets in Resources */,
 				8720A9ED19AF6B5A00F4C5C7 /* 1.png in Resources */,
 				8720A89F19AF08FC00F4C5C7 /* InfoPlist.strings in Resources */,
+				8720A9F319B06E9900F4C5C7 /* tal_box_bk_1@2x.png in Resources */,
 				8720A8A819AF08FC00F4C5C7 /* Main.storyboard in Resources */,
+				8720A9F119B068F100F4C5C7 /* tal_box_bk@2x.png in Resources */,
+				8720A9F919B075A200F4C5C7 /* scene.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

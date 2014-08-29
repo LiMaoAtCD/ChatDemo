@@ -41,9 +41,13 @@ static NSString *reuserIdentifier = @"Cell";
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    UIImageView *backGroundImage= [[UIImageView alloc] initWithFrame:self.view.bounds];
+    backGroundImage.image = [UIImage imageNamed:@"scene"];
+    
+    [self.view addSubview:backGroundImage];
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    
+    self.tableView.backgroundColor = [UIColor clearColor];
     [self.tableView registerClass:[LMTableViewCell class]forCellReuseIdentifier:reuserIdentifier];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;

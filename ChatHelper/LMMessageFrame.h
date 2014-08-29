@@ -14,12 +14,12 @@
 #define kTimeMarginH 10.0    //时间文本与边框间隔高度方向
 
 #define kContentTop 10.0     //文本内容与按钮上边缘间隔
-#define kContentLeft 25.0    //文本内容与按钮左边缘间隔
-#define kContentBottom 15.0  //文本内容与按钮下边缘间隔
+#define kContentLeft 15.0    //文本内容与按钮左边缘间隔
+#define kContentBottom 10.0  //文本内容与按钮下边缘间隔
 #define kContentRight 15.0   //文本内容与按钮右边缘间隔
 
 #define kTimeFont [UIFont systemFontOfSize:12] //时间字体
-#define kContentFont [UIFont systemFontOfSize:16] //内容字体
+#define kContentFont [UIFont systemFontOfSize:18] //内容字体
 
 #import <Foundation/Foundation.h>
 

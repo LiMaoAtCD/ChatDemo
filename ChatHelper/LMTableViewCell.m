@@ -38,6 +38,7 @@
         _timeBtn.titleLabel.font = kTimeFont;
         _timeBtn.enabled = NO;
         _timeBtn.backgroundColor = [UIColor clearColor];
+        _timeBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
         _timeBtn.userInteractionEnabled = NO;
         
         [self.contentView addSubview:_timeBtn];
@@ -47,9 +48,10 @@
 
         // 3、创建内容
         _contentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        
+        [_contentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _contentBtn.titleLabel.font = kContentFont;
         _contentBtn.titleLabel.numberOfLines = 0;
+
         
         [_contentBtn addTarget:self action:@selector(clickToShowOriginalImageOrPlayAudio:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -96,7 +98,7 @@
             [_contentBtn setTitle:message.text forState:UIControlStateNormal];
 //            设置内容frame
             _contentBtn.frame = _messageFrame.contentFrame;
-            _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentRight, kContentBottom, kContentLeft);
+            _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop+5., kContentRight, kContentBottom, kContentLeft);
             
             UIImage *backGroundImage =[UIImage imageNamed:@"tal_box_bk_1"];
             UIEdgeInsets insets =UIEdgeInsetsMake(18, 7, 5, 19);
@@ -111,7 +113,7 @@
             _contentBtn.tag = MessageFromOther;
             
             [_contentBtn setTitle:message.text forState:UIControlStateNormal];
-            [_contentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+           
             _contentBtn.frame = _messageFrame.contentFrame;
             
             _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentLeft, kContentBottom, kContentRight);
