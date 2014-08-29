@@ -10,11 +10,13 @@
 
 @implementation LMMessage
 
-- (void)setDictionary:(NSMutableDictionary *)dictionary{
+- (void)setDictionary:(NSDictionary *)dictionary{
     
     _dictionary = dictionary;
     
-    self.avatar = dictionary[@"avatar"];
+    NSString *avatarName = dictionary[@"avatar"];
+    self.avatar = [UIImage imageNamed:avatarName];
+    
     self.time = dictionary[@"time"];
     self.text = dictionary[@"text"];
     self.originalImageUrl  = dictionary[@"originalImageUrl"];
@@ -28,7 +30,20 @@
 //        self.name = dictionary[@"name"];
 //    }
 }
+-(instancetype)initWithContent:(NSDictionary*)dictionary
+{
+    self = [[LMMessage alloc] init];
+    NSString *avatarName = dictionary[@"avatar"];
+    
+    self.avatar = [UIImage imageNamed:avatarName];
+    
+    self.time = dictionary[@"time"];
+    self.text = dictionary[@"text"];
+    self.originalImageUrl  = dictionary[@"originalImageUrl"];
+    self.messageType = [dictionary[@"messageType"] intValue];
 
+    return self;
+}
 
 
 @end

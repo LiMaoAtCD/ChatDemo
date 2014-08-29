@@ -27,40 +27,33 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
 //#warning 必须先设置为clearColor，否则tableView的背景会被遮住
         self.backgroundColor = [UIColor clearColor];
-        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         // 1、创建时间按钮
         _timeBtn = [[UIButton alloc] init];
+        
         [_timeBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         _timeBtn.titleLabel.font = kTimeFont;
         _timeBtn.enabled = NO;
-
-        [_timeBtn setBackgroundColor:[UIColor clearColor]];
-        [_timeBtn setUserInteractionEnabled:NO];
+        _timeBtn.backgroundColor = [UIColor clearColor];
+        _timeBtn.userInteractionEnabled = NO;
         
         [self.contentView addSubview:_timeBtn];
 
         // 2、创建头像
         avatar = [[UIImageView alloc] init];
-        [self.contentView addSubview:avatar];
-                // 3、创建内容
+
+        // 3、创建内容
         _contentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_contentBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         
         _contentBtn.titleLabel.font = kContentFont;
         _contentBtn.titleLabel.numberOfLines = 0;
-
+        
         [_contentBtn addTarget:self action:@selector(clickToShowOriginalImageOrPlayAudio:) forControlEvents:UIControlEventTouchUpInside];
+        
         [self.contentView addSubview:_contentBtn];
-        
-        //创建图片内容
-        contentImage =[[UIImageView alloc] init];
-        [contentImage setHidden:YES];
-        
-        [_contentBtn addSubview:contentImage];
-
 
     }
     return self;
@@ -70,40 +63,45 @@
     
     _messageFrame = messageFrame;
     LMMessage *message = _messageFrame.message;
-    
 //     1、设置时间
     
     [_timeBtn setTitle:message.time forState:UIControlStateNormal];
     _timeBtn.frame = _messageFrame.timeFrame;
     
 //     2、设置头像
-    if (message.messageType == MessageFromMe ||
-        message.messageType == ImageFromMe ||
-        message.messageType == AudioFromMe) {
-        avatar.image = message.avatar;
-    }else{
-        avatar.image = message.avatar;
-    }
+    avatar.image = message.avatar;
     avatar.frame = _messageFrame.avatarFrame;
-
+    avatar.layer.cornerRadius = _messageFrame.avatarFrame.size.height>_messageFrame.avatarFrame.size.width?_messageFrame.avatarFrame.size.height/2:_messageFrame.avatarFrame.size.width/2;
+    avatar.layer.masksToBounds = YES;
+    
+    [self.contentView addSubview:avatar];
+    
+    
+    
+//    //创建图片内容
+//    contentImage =[[UIImageView alloc] init];
+//    [contentImage setHidden:YES];
+//    
+//    [_contentBtn addSubview:contentImage];
+//    
+//
+    
 //     3、设置内容
     switch (message.messageType) {
         case MessageFromMe:
         {
 //            设置tag
             _contentBtn.tag = MessageFromMe;
-            
 //            设置内容
             [_contentBtn setTitle:message.text forState:UIControlStateNormal];
-
 //            设置内容frame
             _contentBtn.frame = _messageFrame.contentFrame;
-            
             _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentRight, kContentBottom, kContentLeft);
             
-            UIImage *backGroundImage =[UIImage imageNamed:@"IMFromMe"];
-            UIEdgeInsets insets =UIEdgeInsetsMake(25, 25, 25, 25);
+            UIImage *backGroundImage =[UIImage imageNamed:@"tal_box_bk_1"];
+            UIEdgeInsets insets =UIEdgeInsetsMake(18, 7, 5, 19);
             backGroundImage = [backGroundImage resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
+
 //            设置背景颜色（一张图片）
             [_contentBtn setBackgroundImage:backGroundImage forState:UIControlStateNormal];
         }
@@ -113,15 +111,14 @@
             _contentBtn.tag = MessageFromOther;
             
             [_contentBtn setTitle:message.text forState:UIControlStateNormal];
-    
+            [_contentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             _contentBtn.frame = _messageFrame.contentFrame;
             
             _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentLeft, kContentBottom, kContentRight);
             
-            
-            UIImage *normal=[UIImage imageNamed:@"IMFromOther"];
-            normal = [normal stretchableImageWithLeftCapWidth:normal.size.width * 0.5 topCapHeight:normal.size.height * 0.7];
-            
+            UIImage *normal=[UIImage imageNamed:@"tal_box_bk"];
+            UIEdgeInsets insets =UIEdgeInsetsMake(18, 19, 5, 7);
+            normal = [normal resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
             [_contentBtn setBackgroundImage:normal forState:UIControlStateNormal];
 
         }

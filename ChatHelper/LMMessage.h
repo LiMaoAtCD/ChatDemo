@@ -33,6 +33,9 @@ typedef enum {
 //@property (nonatomic, copy) NSString *name;
 //@property (nonatomic, assign) BOOL isGroup;
 
-@property (nonatomic, strong) NSMutableDictionary *dictionary;
+@property (nonatomic, strong) NSDictionary *dictionary;
+
+-(instancetype)initWithContent:(NSDictionary*)dictionary;
+
 
 @end
