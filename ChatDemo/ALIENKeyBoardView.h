@@ -10,4 +10,6 @@
 
 @interface ALIENKeyBoardView : UIView
 
+@property (nonatomic,strong) UIImageView *textViewBackgroundImageView;
+@property (nonatomic,strong)UITextView * textView ;
 @end

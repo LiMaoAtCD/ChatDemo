@@ -51,8 +51,7 @@
         [_contentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _contentBtn.titleLabel.font = kContentFont;
         _contentBtn.titleLabel.numberOfLines = 0;
-
-        
+        _contentBtn.layer.masksToBounds = YES;
         [_contentBtn addTarget:self action:@selector(clickToShowOriginalImageOrPlayAudio:) forControlEvents:UIControlEventTouchUpInside];
         
         [self.contentView addSubview:_contentBtn];
@@ -126,6 +125,7 @@
             _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentImageTop, kContentImageLeft, kContentImageBottom, kContentImageRight+2);
             
             _contentBtn.frame = _messageFrame.contentFrame;
+           
             
             
 

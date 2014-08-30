@@ -10,6 +10,8 @@
 #import "LMTableViewCell.h"
 #import "LMMessageFrame.h"
 #import "LMMessage.h"
+#import "ALIENKeyBoardView.h"
+
 @interface ChatViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic,strong) UITableView *tableView;
@@ -59,7 +61,7 @@ static const int keyBoardHeight = 44.0;
     [self.view addSubview:self.tableView];
     
     
-    self.keyBoardView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height -keyBoardHeight, self.view.bounds.size.width, keyBoardHeight)];
+    self.keyBoardView = [[ALIENKeyBoardView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height -keyBoardHeight, self.view.bounds.size.width, keyBoardHeight)];
     self.keyBoardView.backgroundColor = [UIColor blueColor];
     [self.view addSubview:self.keyBoardView];
     
