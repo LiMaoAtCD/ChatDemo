@@ -33,8 +33,10 @@
         self.textViewBackgroundImageView.layer.masksToBounds = YES;
         [self addSubview:self.textViewBackgroundImageView];
         
-        self.textView= [[UITextView alloc] initWithFrame:CGRectMake(4.5+35.0+5.0+3.0, 4.5+2.0, 190.0-6.0, 35.0 -4.0) textContainer:[[NSTextContainer alloc] initWithSize:CGSizeMake(190.0-6.0, 30.0)]];
+//        self.textView= [[UITextView alloc] initWithFrame:CGRectMake(4.5+35.0+5.0+3.0, 4.5+2.0, 190.0-6.0, 35.0 -4.0) textContainer:[[NSTextContainer alloc] initWithSize:CGSizeMake(190.0-6.0, 30.0)]];
         
+        self.textView = [[UITextView alloc] initWithFrame:CGRectMake(52, 7, 185, 31)];
+          self.textView.delegate = self;
         [self addSubview:self.textView];
 //        
         UIButton *otherButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -51,7 +53,7 @@
         lastButton.tag = 3;
         [self addSubview:lastButton];
         
-        
+      
         
         
         
@@ -68,9 +70,11 @@
         if (button.tag ==1){
             button.tag = 4;
             [button setImage:[UIImage imageNamed:@"im_tab_word"] forState:UIControlStateNormal];
-            [self.textView removeFromSuperview];
+//            [self.textView removeFromSuperview];
             self.textViewBackgroundImageView.image = [UIImage imageNamed:@"im_box2"];
             [self.textView resignFirstResponder];
+//            告诉chatViewController
+            
         } else{
             button.tag =1;
             [button setImage:[UIImage imageNamed:@"im_tab_voice"] forState:UIControlStateNormal];
@@ -96,7 +100,7 @@
 
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
-    
+    NSLog(@"textViewDidBeginEditing");
 }
 
 

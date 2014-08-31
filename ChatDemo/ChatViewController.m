@@ -14,6 +14,8 @@
 
 @interface ChatViewController ()<UITableViewDataSource,UITableViewDelegate>
 
+@property (nonatomic,strong)UIView *bgView;
+
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *DataModel;
 @property (nonatomic,strong) LMMessageFrame *messageFrame;
@@ -25,6 +27,8 @@
 @property (nonatomic,strong)NSMutableArray *cellHeightArray;
 @property (nonatomic,strong)NSMutableArray *cellMessageArray;
 @property (nonatomic,strong)ALIENKeyBoardView *keyboardView;
+
+@property (nonatomic,assign) NSTimeInterval duration;
 @end
 
 @implementation ChatViewController
@@ -44,10 +48,15 @@ static const int keyBoardHeight = 44.0;
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _bgView = [[UIView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:_bgView];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     UIImageView *backGroundImage= [[UIImageView alloc] initWithFrame:self.view.bounds];
     backGroundImage.image = [UIImage imageNamed:@"scene"];
     
-    [self.view addSubview:backGroundImage];
+    [self.bgView addSubview:backGroundImage];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height-keyBoardHeight) style:UITableViewStylePlain];
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -58,12 +67,12 @@ static const int keyBoardHeight = 44.0;
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
     
-    [self.view addSubview:self.tableView];
+    [self.bgView addSubview:self.tableView];
     
     
     self.keyboardView = [[ALIENKeyBoardView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height -keyBoardHeight, self.view.bounds.size.width, keyBoardHeight)];
-    self.keyboardView.backgroundColor = [UIColor blueColor];
-    [self.view addSubview:self.keyboardView];
+    self.keyboardView.backgroundColor = [UIColor whiteColor];
+    [self.bgView addSubview:self.keyboardView];
     
     
     
@@ -199,49 +208,58 @@ static const int keyBoardHeight = 44.0;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidFrameBeChanged:) name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 
 -(void)keyboardWasShown:(NSNotification*)notification
 {
-    NSDictionary* info = [notification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-//    [info objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSTimeInterval duration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey]doubleValue];
-//    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
-//    self.tableView.contentInset = contentInsets;
-//    self.tableView.scrollIndicatorInsets = contentInsets;
-    
-    // If active text field is hidden by keyboard, scroll it so it's visible
-    // Your app might not need or want this behavior.
-//    CGRect aRect = self.view.frame;
-//    aRect.size.height -= kbSize.height;
-//    if (!CGRectContainsPoint(aRect, self.keyboardView.textView.frame.origin) ) {
-//        [self.tableView scrollRectToVisible:self.keyboardView.textView.frame animated:YES];
-//    }
-    
-    [UIView animateWithDuration:duration animations:^{
-        self.view.frame = CGRectMake(self.view.bounds.origin.x,self.view.bounds.origin.y - kbSize.height, self.view.bounds.size.width,self.view.bounds.size.height);
-    } completion:^(BOOL finished) {
-        if(finished){
-            
-        }
-            
-    }];
-    
+//    NSLog(@"keyboardWasShown");
+//
+//    NSDictionary* info = [notification userInfo];
+//    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+//    UIViewAnimationOptions curve = (UIViewAnimationOptions)[info objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+//
+//        _duration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey]doubleValue];
+//    [UIView animateWithDuration:_duration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//         self.view.frame = CGRectMake(self.view.bounds.origin.x,self.view.bounds.origin.y - kbSize.height, self.view.bounds.size.width,self.view.bounds.size.height);
+//    } completion:^(BOOL finished) {
+//        
+//    }];
+//    
 }
 -(void)keyboardWillBeHidden:(NSNotification*)notification
 {
+
+    [UIView animateWithDuration:_duration animations:^{
+        self.bgView.frame = CGRectMake(0, 0, 320, self.view.frame.size.height);
+    }];
+    
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
     
 }
+-(void)keyboardDidFrameBeChanged:(NSNotification *)notification
+{
+    NSLog(@"keyboardDidFrameBeChanged");
+    if (self.keyboardView.textView.isFirstResponder) {
+        
+        NSDictionary* info = [notification userInfo];
+        
+        CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
 
+        _duration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+
+        [UIView animateWithDuration:_duration animations:^{
+            self.bgView.frame = CGRectMake(self.view.bounds.origin.x,self.view.bounds.origin.y - kbSize.height, self.view.bounds.size.width,self.view.bounds.size.height);
+        }];
+        
+    }
+}
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    
+    [super touchesBegan:touches withEvent:event];
     __weak UITableView *weakTableView = self.tableView;
     [touches enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         UITableView *StrongTableView = weakTableView;
@@ -252,6 +270,8 @@ static const int keyBoardHeight = 44.0;
         
         if (CGRectContainsPoint(frame, point)) {
 //            如果在tableview内；
+            [self.tableView resignFirstResponder];
+            
         }
 
         
