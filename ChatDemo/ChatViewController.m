@@ -20,11 +20,11 @@
 @property (nonatomic,strong) LMMessageFrame *tempMessageFrame;
 @property (nonatomic,strong) LMMessage *message;
 
-@property (strong, nonatomic) IBOutlet UIView *keyBoardView;
+
 
 @property (nonatomic,strong)NSMutableArray *cellHeightArray;
 @property (nonatomic,strong)NSMutableArray *cellMessageArray;
-
+@property (nonatomic,strong)ALIENKeyBoardView *keyboardView;
 @end
 
 @implementation ChatViewController
@@ -61,9 +61,9 @@ static const int keyBoardHeight = 44.0;
     [self.view addSubview:self.tableView];
     
     
-    self.keyBoardView = [[ALIENKeyBoardView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height -keyBoardHeight, self.view.bounds.size.width, keyBoardHeight)];
-    self.keyBoardView.backgroundColor = [UIColor blueColor];
-    [self.view addSubview:self.keyBoardView];
+    self.keyboardView = [[ALIENKeyBoardView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height -keyBoardHeight, self.view.bounds.size.width, keyBoardHeight)];
+    self.keyboardView.backgroundColor = [UIColor blueColor];
+    [self.view addSubview:self.keyboardView];
     
     
     
@@ -74,6 +74,7 @@ static const int keyBoardHeight = 44.0;
     [super viewWillAppear:animated];
     [self setupDataModel];
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.cellMessageArray.count -1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    [self registerForKeyboardNotifications];
 }
 
 #pragma mark - setup dataModel
@@ -186,15 +187,75 @@ static const int keyBoardHeight = 44.0;
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+#pragma mark - keyboard
+
+- (void)registerForKeyboardNotifications
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
 }
-*/
+
+-(void)keyboardWasShown:(NSNotification*)notification
+{
+    NSDictionary* info = [notification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+//    [info objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval duration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey]doubleValue];
+//    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+//    self.tableView.contentInset = contentInsets;
+//    self.tableView.scrollIndicatorInsets = contentInsets;
+    
+    // If active text field is hidden by keyboard, scroll it so it's visible
+    // Your app might not need or want this behavior.
+//    CGRect aRect = self.view.frame;
+//    aRect.size.height -= kbSize.height;
+//    if (!CGRectContainsPoint(aRect, self.keyboardView.textView.frame.origin) ) {
+//        [self.tableView scrollRectToVisible:self.keyboardView.textView.frame animated:YES];
+//    }
+    
+    [UIView animateWithDuration:duration animations:^{
+        self.view.frame = CGRectMake(self.view.bounds.origin.x,self.view.bounds.origin.y - kbSize.height, self.view.bounds.size.width,self.view.bounds.size.height);
+    } completion:^(BOOL finished) {
+        if(finished){
+            
+        }
+            
+    }];
+    
+}
+-(void)keyboardWillBeHidden:(NSNotification*)notification
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+    
+}
+
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    
+    __weak UITableView *weakTableView = self.tableView;
+    [touches enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        UITableView *StrongTableView = weakTableView;
+        UITouch *touch = (UITouch*)obj;
+        CGPoint point = [touch locationInView:self.view];
+        CGRect  frame = StrongTableView.frame;
+        
+        
+        if (CGRectContainsPoint(frame, point)) {
+//            如果在tableview内；
+        }
+
+        
+    }];
+}
 
 @end

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ALIENKeyBoardView : UIView
+@interface ALIENKeyBoardView : UIView<UITextViewDelegate>
 
 @property (nonatomic,strong) UIImageView *textViewBackgroundImageView;
 @property (nonatomic,strong)UITextView * textView ;
