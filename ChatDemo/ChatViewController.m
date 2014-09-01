@@ -108,7 +108,7 @@ static const int keyBoardHeight = 44.0;
 
     if (numberofLine<4) {
         
-        [UIView animateWithDuration:0.1 animations:^{
+        [UIView animateWithDuration:0.01 animations:^{
 //            1
             self.tableView.frame = CGRectMake(self.bgTempFrame.origin.x,self.bgTempFrame.origin.y - (numberofLine -1)* textViewHeight, self.bgTempFrame.size.width,self.bgTempFrame.size.height);
 //            2
@@ -128,11 +128,13 @@ static const int keyBoardHeight = 44.0;
 }
 -(void)didSwitchTextInputToVoiceInput
 {
-    [UIView animateWithDuration:0.1 animations:^{
+    [UIView animateWithDuration:0.01 animations:^{
         self.keyboardView.frame = self.keyBoardHelpFrame;
         self.tableView.frame= self.bgTempFrame;
+        self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
         self.keyboardView.textView.frame= self.textViewTempFrame;
         self.keyboardView.textViewBackgroundImageView.frame= self.textViewImageTempFrame;
+        
     } completion:^(BOOL finished) {
         if (finished) {
             [self.keyboardView.textView resignFirstResponder];
