@@ -73,6 +73,9 @@ static const int keyBoardHeight = 44.0;
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
     
+    UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(needResignFirstResponer)];
+    [self.tableView addGestureRecognizer:gesture];
+    
     [self.bgView addSubview:self.tableView];
     
     
@@ -98,6 +101,11 @@ static const int keyBoardHeight = 44.0;
     [self.tableView addHeaderWithTarget:self action:@selector(refreshTableView:)];
 
 }
+-(void)needResignFirstResponer
+{
+    [self restoreKeyboard];
+}
+
 -(void)refreshTableView:(id)sender
 {
     // 1.添加数据
@@ -161,20 +169,28 @@ static const int keyBoardHeight = 44.0;
     
 }
 
+
 -(void)didSwitchTextInputToVoiceInput
 {
+    [self restoreKeyboard];
+
+}
+-(void)restoreKeyboard
+{
     [UIView animateWithDuration:0.01 animations:^{
-        self.keyboardView.frame = self.keyBoardHelpFrame;
-        self.tableView.frame= self.bgTempFrame;
-        self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
-        self.keyboardView.textView.frame= self.textViewTempFrame;
-        self.keyboardView.textViewBackgroundImageView.frame= self.textViewImageTempFrame;
-        
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [self.keyboardView.textView resignFirstResponder];
-        }
-    }];
+    self.keyboardView.frame = self.keyBoardHelpFrame;
+    self.tableView.frame= self.bgTempFrame;
+    self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
+    self.keyboardView.textView.frame= self.textViewTempFrame;
+    self.keyboardView.textViewBackgroundImageView.frame= self.textViewImageTempFrame;
+    
+} completion:^(BOOL finished) {
+    if (finished) {
+        self.keyboardView.textView.text = nil;
+        [self.keyboardView.textView resignFirstResponder];
+    }
+}];
+
 }
 
 
@@ -348,22 +364,6 @@ static const int keyBoardHeight = 44.0;
     }
 }
 
-//-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-//{
-//    [super touchesBegan:touches withEvent:event];
-//    __weak UITableView *weakTableView = self.tableView;
-//    [touches enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-//        UITableView *StrongTableView = weakTableView;
-//        UITouch *touch = (UITouch*)obj;
-//        CGPoint point = [touch locationInView:self.view];
-//        CGRect  frame = StrongTableView.frame;
-//        
-//        
-//        if (CGRectContainsPoint(frame, point)) {
-////            如果在tableview内；
-//            [self.tableView resignFirstResponder];
-//        }
-//    }];
-//}
+
 
 @end
