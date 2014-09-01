@@ -12,7 +12,7 @@
 #import "LMMessage.h"
 #import "ALIENKeyBoardView.h"
 
-@interface ChatViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface ChatViewController ()<UITableViewDataSource,UITableViewDelegate,keyBoardViewDelegate>
 
 @property (nonatomic,strong)UIView *bgView;
 
@@ -29,6 +29,10 @@
 @property (nonatomic,strong)ALIENKeyBoardView *keyboardView;
 
 @property (nonatomic,assign) NSTimeInterval duration;
+@property (nonatomic,assign) CGRect keyBoardHelpFrame;
+@property (nonatomic,assign) CGRect bgTempFrame;
+@property (nonatomic,assign) CGRect textViewTempFrame;
+@property (nonatomic,assign) CGRect textViewImageTempFrame;
 @end
 
 @implementation ChatViewController
@@ -71,12 +75,12 @@ static const int keyBoardHeight = 44.0;
     
     
     self.keyboardView = [[ALIENKeyBoardView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height -keyBoardHeight, self.view.bounds.size.width, keyBoardHeight)];
+    self.keyboardView.delegate =self;
     self.keyboardView.backgroundColor = [UIColor whiteColor];
+    
     [self.bgView addSubview:self.keyboardView];
     
-    
-    
-
+    [self needCacheCurrentLayouts];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -85,6 +89,58 @@ static const int keyBoardHeight = 44.0;
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.cellMessageArray.count -1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
     [self registerForKeyboardNotifications];
 }
+//存当前frames ，等待恢复
+-(void)needCacheCurrentLayouts
+{
+    self.keyBoardHelpFrame = self.keyboardView.frame;
+    self.bgTempFrame = self.tableView.frame;
+    self.textViewTempFrame = self.keyboardView.textView.frame;
+    self.textViewImageTempFrame = self.keyboardView.textViewBackgroundImageView.frame;
+}
+
+
+
+-(void)didReceiveTheInputViewHeightChanged
+{
+    int numberofLine = self.keyboardView.textView.contentSize.height/self.keyboardView.textView.font.lineHeight;
+    
+    CGFloat textViewHeight = self.keyboardView.textView.font.lineHeight;
+
+    if (numberofLine<4) {
+        
+        [UIView animateWithDuration:0.1 animations:^{
+//            1
+            self.tableView.frame = CGRectMake(self.bgTempFrame.origin.x,self.bgTempFrame.origin.y - (numberofLine -1)* textViewHeight, self.bgTempFrame.size.width,self.bgTempFrame.size.height);
+//            2
+            self.keyboardView.frame = CGRectMake(self.keyBoardHelpFrame.origin.x, self.keyBoardHelpFrame.origin.y -(numberofLine-1) * textViewHeight,self.keyBoardHelpFrame.size.width,self.keyBoardHelpFrame.size.height+(numberofLine-1) * textViewHeight);
+//            3
+            self.keyboardView.textView.frame =CGRectMake(self.textViewTempFrame.origin.x, self.textViewTempFrame.origin.y, self.textViewTempFrame.size.width, self.textViewTempFrame.size.height+(numberofLine-1)*textViewHeight);
+//            4
+            self.keyboardView.textViewBackgroundImageView.frame = CGRectMake(self.textViewImageTempFrame.origin.x, self.textViewImageTempFrame.origin.y, self.textViewImageTempFrame.size.width, self.textViewImageTempFrame.size.height + (numberofLine-1)*textViewHeight);
+            
+            
+        } completion:^(BOOL finished) {
+            
+        }];
+
+    }
+    
+}
+-(void)didSwitchTextInputToVoiceInput
+{
+    [UIView animateWithDuration:0.1 animations:^{
+        self.keyboardView.frame = self.keyBoardHelpFrame;
+        self.tableView.frame= self.bgTempFrame;
+        self.keyboardView.textView.frame= self.textViewTempFrame;
+        self.keyboardView.textViewBackgroundImageView.frame= self.textViewImageTempFrame;
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [self.keyboardView.textView resignFirstResponder];
+        }
+    }];
+}
+
+
 
 #pragma mark - setup dataModel
 -(void)setupDataModel
@@ -185,8 +241,6 @@ static const int keyBoardHeight = 44.0;
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat height = [self.cellHeightArray[indexPath.row] floatValue];
-    
-    
     return height;
 }
 
@@ -257,25 +311,22 @@ static const int keyBoardHeight = 44.0;
     }
 }
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [super touchesBegan:touches withEvent:event];
-    __weak UITableView *weakTableView = self.tableView;
-    [touches enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-        UITableView *StrongTableView = weakTableView;
-        UITouch *touch = (UITouch*)obj;
-        CGPoint point = [touch locationInView:self.view];
-        CGRect  frame = StrongTableView.frame;
-        
-        
-        if (CGRectContainsPoint(frame, point)) {
-//            如果在tableview内；
-            [self.tableView resignFirstResponder];
-            
-        }
-
-        
-    }];
-}
+//-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [super touchesBegan:touches withEvent:event];
+//    __weak UITableView *weakTableView = self.tableView;
+//    [touches enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+//        UITableView *StrongTableView = weakTableView;
+//        UITouch *touch = (UITouch*)obj;
+//        CGPoint point = [touch locationInView:self.view];
+//        CGRect  frame = StrongTableView.frame;
+//        
+//        
+//        if (CGRectContainsPoint(frame, point)) {
+////            如果在tableview内；
+//            [self.tableView resignFirstResponder];
+//        }
+//    }];
+//}
 
 @end

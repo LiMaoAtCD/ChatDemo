@@ -29,16 +29,18 @@
         
        self.textViewBackgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(4.5+35.0+5.0, 4.5, 190.0, 35.0)];
         self.textViewBackgroundImageView.image =[UIImage imageNamed:@"im_box1"];
+         self.textViewBackgroundImageView.image = [self.textViewBackgroundImageView.image resizableImageWithCapInsets:UIEdgeInsetsMake(24, 150, 24, 150) resizingMode:UIImageResizingModeStretch];
         self.textViewBackgroundImageView.layer.cornerRadius = 4.0;
         self.textViewBackgroundImageView.layer.masksToBounds = YES;
         [self addSubview:self.textViewBackgroundImageView];
         
-//        self.textView= [[UITextView alloc] initWithFrame:CGRectMake(4.5+35.0+5.0+3.0, 4.5+2.0, 190.0-6.0, 35.0 -4.0) textContainer:[[NSTextContainer alloc] initWithSize:CGSizeMake(190.0-6.0, 30.0)]];
-        
-        self.textView = [[UITextView alloc] initWithFrame:CGRectMake(52, 7, 185, 31)];
-          self.textView.delegate = self;
+
+        self.textView= [[UITextView alloc] initWithFrame:CGRectMake(4.5+35.0+5.0+3.0, 4.5+2.0, 190.0-6.0, 35.0 -4.0) textContainer:nil];
+
+        self.textView.delegate = self;
+        self.textView.font = [UIFont systemFontOfSize:16.0];
         [self addSubview:self.textView];
-//        
+        
         UIButton *otherButton = [UIButton buttonWithType:UIButtonTypeCustom];
         otherButton.frame = CGRectMake(240, 4.5, 35.0, 35.0);
         [otherButton addTarget:self action:@selector(swapVoiceOrKeyBoardImage:) forControlEvents:UIControlEventTouchUpInside];
@@ -65,29 +67,28 @@
 -(void)swapVoiceOrKeyBoardImage:(id)sender
 {
     UIButton *button = (UIButton*)sender;
-    if (button.tag ==1||button.tag ==4) {
 //        切换录音或者文字
-        if (button.tag ==1){
-            button.tag = 4;
-            [button setImage:[UIImage imageNamed:@"im_tab_word"] forState:UIControlStateNormal];
-//            [self.textView removeFromSuperview];
-            self.textViewBackgroundImageView.image = [UIImage imageNamed:@"im_box2"];
-            [self.textView resignFirstResponder];
-//            告诉chatViewController
-            
-        } else{
-            button.tag =1;
-            [button setImage:[UIImage imageNamed:@"im_tab_voice"] forState:UIControlStateNormal];
-            [self addSubview:self.textView];
-            self.textViewBackgroundImageView.image = [UIImage imageNamed:@"im_box1"];
-            [self.textView becomeFirstResponder];
+    if (button.tag ==1){
+        button.tag = 4;
+        [button setImage:[UIImage imageNamed:@"im_tab_word"] forState:UIControlStateNormal];
+        self.textViewBackgroundImageView.image = [UIImage imageNamed:@"im_box2"];
+        [self.textView removeFromSuperview];
+        self.textView.text = nil;
+        if ([self.delegate respondsToSelector:@selector(didSwitchTextInputToVoiceInput)]) {
+            [self.delegate didSwitchTextInputToVoiceInput];
         }
-        
         
     }else if(button.tag ==2){
 //        图片或者其他
     }else if (button.tag ==3){
 //        图片或者其他
+    }else if(button.tag ==4){
+        button.tag =1;
+        [button setImage:[UIImage imageNamed:@"im_tab_voice"] forState:UIControlStateNormal];
+        [self addSubview:self.textView];
+        self.textViewBackgroundImageView.image = [UIImage imageNamed:@"im_box1"];
+        
+        [self.textView becomeFirstResponder];
     }else{
         NSAssert(button.tag, @"button.tag is illegal");
     }
@@ -96,21 +97,18 @@
 
 #pragma mark -textview delegate
 
-
-
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
     NSLog(@"textViewDidBeginEditing");
 }
 
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    // Drawing code
+        if ([self.delegate respondsToSelector:@selector(didReceiveTheInputViewHeightChanged)]) {
+            [self.delegate didReceiveTheInputViewHeightChanged];
+        }
+    return YES;
 }
-*/
+
 
 @end
