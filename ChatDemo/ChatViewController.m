@@ -35,6 +35,8 @@
 @property (nonatomic,assign) CGRect bgTempFrame;
 @property (nonatomic,assign) CGRect textViewTempFrame;
 @property (nonatomic,assign) CGRect textViewImageTempFrame;
+
+@property (nonatomic,strong)UIPanGestureRecognizer *gesture;
 @end
 
 @implementation ChatViewController
@@ -73,8 +75,7 @@ static const int keyBoardHeight = 44.0;
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
     
-    UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(needResignFirstResponer)];
-    [self.tableView addGestureRecognizer:gesture];
+    self.gesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(needResignFirstResponer)];
     
     [self.bgView addSubview:self.tableView];
     
@@ -103,7 +104,10 @@ static const int keyBoardHeight = 44.0;
 }
 -(void)needResignFirstResponer
 {
-    [self restoreKeyboard];
+    if (self.keyboardView.textView.isFirstResponder) {
+        [self restoreKeyboard];
+    }
+    
 }
 
 -(void)refreshTableView:(id)sender
@@ -344,6 +348,7 @@ static const int keyBoardHeight = 44.0;
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
+    [self.tableView removeGestureRecognizer:_gesture];
     
 }
 -(void)keyboardDidFrameBeChanged:(NSNotification *)notification
@@ -354,6 +359,9 @@ static const int keyBoardHeight = 44.0;
         NSDictionary* info = [notification userInfo];
         
         CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+
+        [self.tableView addGestureRecognizer:_gesture];
+        
 
         _duration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
 

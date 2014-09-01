@@ -39,6 +39,7 @@
 
         self.textView.delegate = self;
         self.textView.font = [UIFont systemFontOfSize:16.0];
+        self.textView.returnKeyType = UIReturnKeySend;
         [self addSubview:self.textView];
         
         UIButton *otherButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -109,6 +110,9 @@
         }
     return YES;
 }
-
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    NSLog(@"textViewDidEndEditing");
+}
 
 @end
