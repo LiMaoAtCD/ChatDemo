@@ -12,6 +12,8 @@
 #import "LMMessage.h"
 #import "ALIENKeyBoardView.h"
 
+#import "MJRefresh.h"
+
 @interface ChatViewController ()<UITableViewDataSource,UITableViewDelegate,keyBoardViewDelegate>
 
 @property (nonatomic,strong)UIView *bgView;
@@ -81,6 +83,7 @@ static const int keyBoardHeight = 44.0;
     [self.bgView addSubview:self.keyboardView];
     
     [self needCacheCurrentLayouts];
+    [self setupMJRefresh];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -89,7 +92,38 @@ static const int keyBoardHeight = 44.0;
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.cellMessageArray.count -1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
     [self registerForKeyboardNotifications];
 }
-//存当前frames ，等待恢复
+-(void)setupMJRefresh
+{
+
+    [self.tableView addHeaderWithTarget:self action:@selector(refreshTableView:)];
+
+}
+-(void)refreshTableView:(id)sender
+{
+    // 1.添加数据
+    for (int i = 0; i<5; i++) {
+        //            [self.fakeData insertObject:MJRandomData atIndex:0];
+        //            self setDataModel:<#(NSMutableArray *)#>
+        LMMessage *message = [[LMMessage alloc] initWithContent:self.DataModel[self.DataModel.count - i-1]];
+        [self.cellMessageArray insertObject:message atIndex:0];
+        
+        self.messageFrame.message = message;
+        
+        [self.cellHeightArray insertObject:@(self.messageFrame.cellHeight) atIndex:0];
+        
+    }
+    
+    // 2.2秒后刷新表格UI
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        // 刷新表格
+        [self.tableView reloadData];
+        
+        // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
+        [self.tableView headerEndRefreshing];
+    });
+}
+
+//保存当前frames ，等待textview 失去焦点时恢复
 -(void)needCacheCurrentLayouts
 {
     self.keyBoardHelpFrame = self.keyboardView.frame;
@@ -97,11 +131,11 @@ static const int keyBoardHeight = 44.0;
     self.textViewTempFrame = self.keyboardView.textView.frame;
     self.textViewImageTempFrame = self.keyboardView.textViewBackgroundImageView.frame;
 }
-
-
+#pragma mark - alienkeyboard delegate
 
 -(void)didReceiveTheInputViewHeightChanged
 {
+//    
     int numberofLine = self.keyboardView.textView.contentSize.height/self.keyboardView.textView.font.lineHeight;
     
     CGFloat textViewHeight = self.keyboardView.textView.font.lineHeight;
@@ -126,6 +160,7 @@ static const int keyBoardHeight = 44.0;
     }
     
 }
+
 -(void)didSwitchTextInputToVoiceInput
 {
     [UIView animateWithDuration:0.01 animations:^{
@@ -297,7 +332,7 @@ static const int keyBoardHeight = 44.0;
 }
 -(void)keyboardDidFrameBeChanged:(NSNotification *)notification
 {
-    NSLog(@"keyboardDidFrameBeChanged");
+
     if (self.keyboardView.textView.isFirstResponder) {
         
         NSDictionary* info = [notification userInfo];
