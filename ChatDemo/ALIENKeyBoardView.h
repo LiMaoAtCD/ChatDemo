@@ -28,12 +28,13 @@ typedef NS_ENUM(NSUInteger, inputViewTypeTag) {
 @interface ALIENKeyBoardView : UIView<UITextViewDelegate>
 
 @property (nonatomic,strong) UIImageView *textViewBackgroundImageView;
-@property (nonatomic,strong)UITextView * textView ;
+@property (nonatomic,strong) UITextView * textView ;
 @property (nonatomic,weak)id<keyBoardViewDelegate> delegate;
 
+@property (nonatomic,strong) UIButton *CurrentButton;
+@property (nonatomic,strong) UIButton *VoiceButton;
+@property (nonatomic,strong) UIButton *EmojButton;
+@property (nonatomic,strong) UIButton *AddtionButton;
 
-@property (nonatomic,strong)UIView *originalInputView;
-@property (nonatomic,strong)UIView *voiceInputView;
-@property (nonatomic,strong) UIButton *inputButton;
-
+@property (nonatomic,strong) NSMutableArray *statusArray;
 @end

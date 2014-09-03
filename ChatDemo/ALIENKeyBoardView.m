@@ -40,21 +40,23 @@ static const float kFontSize = 16.0;
         
         self.frame = CGRectMake(frame.origin.x, frame.origin.y,frame.size.width, 44.0);
 //        切换声音或者文本按钮
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(kMarginX, kMarginY, kImageWidth, kImageHeight);
-        [button addTarget:self action:@selector(swapVoiceOrKeyBoardImage:) forControlEvents:UIControlEventTouchUpInside];
-        [button setImage:[UIImage imageNamed:@"im_tab_voice"] forState:UIControlStateNormal];
-        button.tag = inputViewTypeTagVoice;
-        [self addSubview:button];
+        _VoiceButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _VoiceButton.frame = CGRectMake(kMarginX, kMarginY, kImageWidth, kImageHeight);
+        [_VoiceButton addTarget:self action:@selector(swapVoiceOrKeyBoardImage:) forControlEvents:UIControlEventTouchUpInside];
+        [_VoiceButton setImage:[UIImage imageNamed:@"im_tab_voice"] forState:UIControlStateNormal];
+        _VoiceButton.tag = inputViewTypeTagVoice;
+        [self addSubview:_VoiceButton];
+        
 //        点击输入文字或者开始录音
+        
        self.textViewBackgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kMarginX+kImageWidth+kMarginX, ktextViewBGMarginToSuper, ktextViewBGWidth, ktextViewBGHeight)];
-        self.textViewBackgroundImageView.image =[UIImage imageNamed:@"im_box1"];
-         self.textViewBackgroundImageView.image = [self.textViewBackgroundImageView.image resizableImageWithCapInsets:UIEdgeInsetsMake(24, 150, 24, 150) resizingMode:UIImageResizingModeStretch];
+        
+         self.textViewBackgroundImageView.image = [[UIImage imageNamed:@"im_box1"] resizableImageWithCapInsets:UIEdgeInsetsMake(24, 150, 24, 150) resizingMode:UIImageResizingModeStretch];
 
         [self addSubview:self.textViewBackgroundImageView];
         
 
-        self.textView= [[UITextView alloc] initWithFrame:CGRectMake(kMarginX+kImageWidth+kMarginX+kMarginTVAndBK_X, ktextViewBGMarginToSuper+kMarginTVAndBK_Y, ktextViewBGWidth- 1.5*kMarginTVAndBK_X, ktextViewBGHeight- 2*kMarginTVAndBK_Y) textContainer:nil];
+        self.textView = [[UITextView alloc] initWithFrame:CGRectMake(kMarginX+kImageWidth+kMarginX+kMarginTVAndBK_X, ktextViewBGMarginToSuper+kMarginTVAndBK_Y, ktextViewBGWidth- 1.5*kMarginTVAndBK_X, ktextViewBGHeight- 2*kMarginTVAndBK_Y) textContainer:nil];
 
         self.textView.delegate = self;
         self.textView.font = [UIFont systemFontOfSize:kFontSize];
@@ -62,85 +64,99 @@ static const float kFontSize = 16.0;
         
         [self addSubview:self.textView];
         
-        UIButton *otherButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        otherButton.frame = CGRectMake(240, 4.5, 35.0, 35.0);
-        [otherButton addTarget:self action:@selector(swapVoiceOrKeyBoardImage:) forControlEvents:UIControlEventTouchUpInside];
-        [otherButton setImage:[UIImage imageNamed:@"im_tab_plus"] forState:UIControlStateNormal];
-        otherButton.tag = inputViewTypeTagEmoj;
-        [self addSubview:otherButton];
+        _EmojButton= [UIButton buttonWithType:UIButtonTypeCustom];
+        _EmojButton.frame = CGRectMake(240, 4.5, 35.0, 35.0);
+        [_EmojButton addTarget:self action:@selector(swapVoiceOrKeyBoardImage:) forControlEvents:UIControlEventTouchUpInside];
+        [_EmojButton setImage:[UIImage imageNamed:@"im_emoji@2x"] forState:UIControlStateNormal];
+        _EmojButton.tag = inputViewTypeTagEmoj;
+        [self addSubview:_EmojButton];
         
-        UIButton *lastButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        lastButton.frame = CGRectMake(280, 4.5, 35.0, 35.0);
-        [lastButton addTarget:self action:@selector(swapVoiceOrKeyBoardImage:) forControlEvents:UIControlEventTouchUpInside];
-        [lastButton setImage:[UIImage imageNamed:@"im_tab_plus"] forState:UIControlStateNormal];
-        lastButton.tag = inputViewTypeTagOther;
-        [self addSubview:lastButton];
+        _AddtionButton= [UIButton buttonWithType:UIButtonTypeCustom];
+        _AddtionButton.frame = CGRectMake(280, 4.5, 35.0, 35.0);
+        [_AddtionButton addTarget:self action:@selector(swapVoiceOrKeyBoardImage:) forControlEvents:UIControlEventTouchUpInside];
+        [_AddtionButton setImage:[UIImage imageNamed:@"im_tab_plus"] forState:UIControlStateNormal];
+        _AddtionButton.tag = inputViewTypeTagOther;
+        [self addSubview:_AddtionButton];
         
-        
-        self.voiceInputView = [[UIView alloc] initWithFrame:CGRectMake(0, 216, 320, 216)];
-        
-        self.voiceInputView.backgroundColor = [UIColor yellowColor];
-        
-        UIView *voice = [[UIView alloc] initWithFrame:CGRectMake(320/2-100/2, 216/2-100/2, 100, 100)];
-        voice.backgroundColor = [UIColor blackColor];
-
-//        UITapGestureRecognizer *tap = [UITapGestureRecognizer alloc] initWithTarget:self action:@selector(<#selector#>)
-        [self.voiceInputView addSubview:voice];
-        
-//
+        _statusArray =[ @[@0,@0,@0]mutableCopy];
  
-        
-        
     }
     return self;
 }
-static inputViewTypeTag preTag;
-
+static BOOL clickButton = NO;
 
 -(void)swapVoiceOrKeyBoardImage:(id)sender
 {
-    self.inputButton = (UIButton*)sender;
-//
-    if (self.inputButton.tag == inputViewTypeTagVoice){
-//        切换到录音视图
-        self.inputButton.tag = inputViewTypeTagKeyboard;
-        preTag = inputViewTypeTagVoice;
-        [self.inputButton setImage:[UIImage imageNamed:@"im_tab_word"] forState:UIControlStateNormal];
-
-        if ([self.delegate respondsToSelector:@selector(didSwitchTextInputORVoiceInput:)]) {
-            [self.delegate didSwitchTextInputORVoiceInput:inputViewTypeTagVoice];
-        }
-        
-    }else if(self.inputButton.tag ==inputViewTypeTagEmoj){
-//        图片或者其他
-        self.inputButton.tag = inputViewTypeTagKeyboard;
-        preTag = inputViewTypeTagEmoj;
-        [self.inputButton setImage:[UIImage imageNamed:@"im_tab_word"] forState:UIControlStateNormal];
-        
-        
-    }else if (self.inputButton.tag ==inputViewTypeTagOther){
-//        图片或者其他
-    }else if(self.inputButton.tag == inputViewTypeTagKeyboard){
-        
-        if ( preTag == inputViewTypeTagVoice) {
-            
-//            self.inputButton.tag = inputViewTypeTagVoice;
-//            [self.inputButton setImage:[UIImage imageNamed:@"im_tab_voice"] forState:UIControlStateNormal];
-
-//            if ([self.delegate respondsToSelector:@selector(didSwitchTextInputORVoiceInput:)]) {
-//                [self.delegate didSwitchTextInputORVoiceInput:inputViewTypeTagKeyboard];
-//            }
-            [self.textView becomeFirstResponder];
-            self.inputButton.tag = inputViewTypeTagVoice;
-            
-        }
-
-    }else{
-        NSAssert(self.inputButton.tag, @"button.tag is illegal");
-    }
+    clickButton = YES;
+    self.CurrentButton = (UIButton*)sender;
     
+    if (self.CurrentButton == self.VoiceButton) {
+        if ([_statusArray[0]integerValue]== 0) {
+            _statusArray = [@[@1,@0,@0] mutableCopy];
+//            录音
+            
+            [_VoiceButton setImage:[UIImage imageNamed:@"im_tab_word"] forState:UIControlStateNormal];
+            [_EmojButton setImage:[UIImage imageNamed:@"im_emoji@2x"] forState:UIControlStateNormal];
+            [_AddtionButton setImage:[UIImage imageNamed:@"im_tab_plus"] forState:UIControlStateNormal];
+            
+            if ([self.delegate respondsToSelector:@selector(didSwitchTextInputORVoiceInput:)]) {
+                   [self.delegate didSwitchTextInputORVoiceInput:inputViewTypeTagVoice];
+            }
+            clickButton = NO;
+            
+        }else{
+//            键盘
+            [self xxxxxx];
+            [self.textView becomeFirstResponder];
+
+            
+        }
+    } else if (self.CurrentButton == self.EmojButton){
+        if ([_statusArray[1]integerValue]== 0) {
+            _statusArray = [@[@0,@1,@0] mutableCopy];
+            //            表情
+            [_VoiceButton setImage:[UIImage imageNamed:@"im_tab_voice"] forState:UIControlStateNormal];
+            [_EmojButton setImage:[UIImage imageNamed:@"im_tab_word"] forState:UIControlStateNormal];
+            [_AddtionButton setImage:[UIImage imageNamed:@"im_tab_plus"] forState:UIControlStateNormal];
+            if ([self.delegate respondsToSelector:@selector(didSwitchTextInputORVoiceInput:)]) {
+                [self.delegate didSwitchTextInputORVoiceInput:inputViewTypeTagEmoj];
+            }
+            clickButton = NO;
+            
+        }else{
+            //            键盘
+            [self xxxxxx];
+            [self.textView becomeFirstResponder];
+        }
+    
+    }else{
+        if ([_statusArray[2]integerValue]== 0) {
+            _statusArray = [@[@0,@0,@1] mutableCopy];
+            //            附加
+            [_VoiceButton setImage:[UIImage imageNamed:@"im_tab_voice"] forState:UIControlStateNormal];
+            [_EmojButton setImage:[UIImage imageNamed:@"im_emoji@2x"] forState:UIControlStateNormal];
+            [_AddtionButton setImage:[UIImage imageNamed:@"im_tab_word"] forState:UIControlStateNormal];
+            if ([self.delegate respondsToSelector:@selector(didSwitchTextInputORVoiceInput:)]) {
+                [self.delegate didSwitchTextInputORVoiceInput:inputViewTypeTagOther];
+            }
+            clickButton = NO;
+            
+        }else{
+            //            键盘
+            [self xxxxxx];
+            [self.textView becomeFirstResponder];
+        }
+    }
 }
 
+-(void)xxxxxx
+{
+    _statusArray = [@[@0,@0,@0] mutableCopy];
+    [_VoiceButton setImage:[UIImage imageNamed:@"im_tab_voice"] forState:UIControlStateNormal];
+    [_EmojButton setImage:[UIImage imageNamed:@"im_emoji@2x"] forState:UIControlStateNormal];
+    [_AddtionButton setImage:[UIImage imageNamed:@"im_tab_plus"] forState:UIControlStateNormal];
+    clickButton = YES;
+}
 #pragma mark -textview delegate
 
 
@@ -166,14 +182,14 @@ static inputViewTypeTag preTag;
 
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
-    
+    if (clickButton == NO) {
+        [self xxxxxx];
+    }
     if([self.delegate respondsToSelector:@selector(AlienTextViewDidBeginEditing)])
     {
 //        如果直接点击textView按钮
-                preTag = inputViewTypeTagVoice;
-                self.inputButton.tag = inputViewTypeTagKeyboard;
-                [self.inputButton setImage:[UIImage imageNamed:@"im_tab_voice"] forState:UIControlStateNormal];
-                [self.delegate AlienTextViewDidBeginEditing];
+
+        [self.delegate AlienTextViewDidBeginEditing];
     }
 }
 

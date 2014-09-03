@@ -15,6 +15,9 @@
 #import "MJRefresh.h"
 #import "ALIENMessageDataModel.h"
 
+#import "ALIENEmojiView.h"
+#import "ALIENAddtionView.h"
+
 @interface ChatViewController ()<UITableViewDataSource,UITableViewDelegate,keyBoardViewDelegate>
 
 @property (nonatomic,strong) UIView *bgView;
@@ -31,6 +34,7 @@
 
 @property (nonatomic,strong) NSMutableArray *cellHeightArray;
 @property (nonatomic,strong) NSMutableArray *cellMessageArray;
+
 @property (nonatomic,strong) ALIENKeyBoardView *keyboardView;
 
 @property (nonatomic,assign) CGRect keyBoardHelpFrame;
@@ -39,9 +43,9 @@
 @property (nonatomic,assign) CGRect textViewImageTempFrame;
 
 @property (nonatomic,strong) UIPanGestureRecognizer *pullDownGesture;
-
-
 @property (nonatomic,strong) ALIENVoiceRecordingView *recordingView;
+@property (nonatomic,strong) ALIENEmojiView *emojiView;
+@property (nonatomic,strong) ALIENAddtionView *addtionView;
 
 @end
 
@@ -126,7 +130,10 @@ static const int keyBoardHeight = 44.0;
      _pullDownGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(needResignFirstResponer)];
     
     _recordingView = [[ALIENVoiceRecordingView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 216)];
-
+    _emojiView = [[ALIENEmojiView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 216)];
+    _addtionView = [[ALIENAddtionView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 216)];
+    
+    
     
     [self needCacheCurrentLayouts];
 }
@@ -233,18 +240,26 @@ static const int keyBoardHeight = 44.0;
 -(void)didSwitchTextInputORVoiceInput:(inputViewTypeTag)inputType
 {
     switch (inputType) {
-//            你可能想要录下自己的叫床声
+            
+//            这家伙可能想要咆哮
         case inputViewTypeTagVoice:
         {
-//            清理以前渣渣撇撇
+//            清理渣渣撇撇
             [self.recordingView removeFromSuperview];
+            [self.emojiView removeFromSuperview];
+            [self.addtionView removeFromSuperview];
             [self.keyboardView.textView resignFirstResponder];
             
 //            添加叫床视图
+            if (!self.recordingView) {
+                self.recordingView = [[ALIENVoiceRecordingView alloc]initWithFrame:CGRectZero];
+            }
             self.recordingView.Frame = CGRectMake(0, self.bgView.bounds.size.height, 320, 216);
+           
             [self.view addSubview:self.recordingView];
             
 //            添加下滑手势
+            
             [self.tableView addGestureRecognizer:self.pullDownGesture];
             
             [self shoudCompletionDismissKeyboardView:NO];
@@ -253,19 +268,73 @@ static const int keyBoardHeight = 44.0;
                 
                 self.recordingView.Frame = CGRectMake(0, self.bgView.bounds.size.height-216, 320, 216);
                 } completion:^(BOOL finished) {
-                    
+                    NSLog(@"这家伙可以叫床了");
                 }];
         }
             break;
-        case inputViewTypeTagKeyboard:
+        case inputViewTypeTagEmoj:
         {
-//            录音视图恢复
+            //            清理渣渣撇撇
             [self.recordingView removeFromSuperview];
-            self.recordingView.Frame = CGRectMake(0, self.bgView.bounds.size.height, 320, 216);
-            [self.view addSubview:self.recordingView];
-            [self.keyboardView.textView becomeFirstResponder];
+            [self.emojiView removeFromSuperview];
+            [self.addtionView removeFromSuperview];
+            [self.keyboardView.textView resignFirstResponder];
+            
+            //            添加叫床视图
+            if (!self.emojiView) {
+                self.emojiView = [[ALIENEmojiView alloc]initWithFrame:CGRectZero];
+            }
+            self.emojiView.Frame = CGRectMake(0, self.bgView.bounds.size.height, 320, 216);
+            
+            [self.view addSubview:self.emojiView];
+            
+            //            添加下滑手势
+            
+            [self.tableView addGestureRecognizer:self.pullDownGesture];
+            
             [self shoudCompletionDismissKeyboardView:NO];
+            
+            [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                
+                self.emojiView.Frame = CGRectMake(0, self.bgView.bounds.size.height-216, 320, 216);
+            } completion:^(BOOL finished) {
+                NSLog(@"这家伙可以面目全非了");
+            }];
+
         }
+            break;
+            case inputViewTypeTagOther:
+        {
+            //            清理渣渣撇撇
+            [self.recordingView removeFromSuperview];
+            [self.emojiView removeFromSuperview];
+            [self.addtionView removeFromSuperview];
+            [self.keyboardView.textView resignFirstResponder];
+            
+            //            添加叫床视图
+            if (!self.addtionView) {
+                self.addtionView = [[ALIENAddtionView alloc]initWithFrame:CGRectZero];
+            }
+            self.addtionView.Frame = CGRectMake(0, self.bgView.bounds.size.height, 320, 216);
+            
+            [self.view addSubview:self.addtionView];
+            
+            //            添加下滑手势
+            
+            [self.tableView addGestureRecognizer:self.pullDownGesture];
+            
+            [self shoudCompletionDismissKeyboardView:NO];
+            
+            [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                
+                self.addtionView.Frame = CGRectMake(0, self.bgView.bounds.size.height-216, 320, 216);
+            } completion:^(BOOL finished) {
+                NSLog(@"这家伙可以干啥子呢");
+            }];
+
+        }
+            break;
+            
             
         default:
             break;
@@ -276,11 +345,12 @@ static const int keyBoardHeight = 44.0;
 }
 -(void)AlienTextViewDidBeginEditing
 {
-
+    //            清理渣渣撇撇
     [self.recordingView removeFromSuperview];
+    [self.emojiView removeFromSuperview];
+    [self.addtionView removeFromSuperview];
     
-    [self.keyboardView.textView becomeFirstResponder];
-
+//    [self.keyboardView.textView resignFirstResponder];
     [self shoudCompletionDismissKeyboardView:NO];
 }
 
