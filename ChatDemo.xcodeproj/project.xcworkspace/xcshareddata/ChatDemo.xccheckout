@@ -10,29 +10,29 @@
 	<string>ChatDemo</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>7F5D7608-2BA7-479F-AB5C-81D9146C043E</key>
+		<key>34A8D52E298B04B09EA5A68602987B3B51C2F865</key>
 		<string>https://github.com/liamscofield/ChatDemo.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>ChatDemo.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>7F5D7608-2BA7-479F-AB5C-81D9146C043E</key>
+		<key>34A8D52E298B04B09EA5A68602987B3B51C2F865</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/liamscofield/ChatDemo.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>7F5D7608-2BA7-479F-AB5C-81D9146C043E</string>
+	<string>34A8D52E298B04B09EA5A68602987B3B51C2F865</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>7F5D7608-2BA7-479F-AB5C-81D9146C043E</string>
+			<string>34A8D52E298B04B09EA5A68602987B3B51C2F865</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ChatDemo</string>
 		</dict>

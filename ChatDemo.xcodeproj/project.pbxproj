@@ -38,6 +38,7 @@
 		87DF91A319B46BCB00597255 /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DF919919B46BCB00597255 /* UIScrollView+MJExtension.m */; };
 		87DF91A419B46BCB00597255 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DF919B19B46BCB00597255 /* UIScrollView+MJRefresh.m */; };
 		87DF91A519B46BCB00597255 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DF919D19B46BCB00597255 /* UIView+MJExtension.m */; };
+		87E028CF19B5CA8C00F8D432 /* ALIENVoiceRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E028CE19B5CA8C00F8D432 /* ALIENVoiceRecordingView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +101,8 @@
 		87DF919B19B46BCB00597255 /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		87DF919C19B46BCB00597255 /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
 		87DF919D19B46BCB00597255 /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
+		87E028CD19B5CA8C00F8D432 /* ALIENVoiceRecordingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALIENVoiceRecordingView.h; sourceTree = "<group>"; };
+		87E028CE19B5CA8C00F8D432 /* ALIENVoiceRecordingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALIENVoiceRecordingView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +168,7 @@
 		8720A89A19AF08FC00F4C5C7 /* ChatDemo */ = {
 			isa = PBXGroup;
 			children = (
+				87E028C919B5727E00F8D432 /* InputAccessoryView */,
 				8720A8A319AF08FC00F4C5C7 /* ALIENAppDelegate.h */,
 				8720A8A419AF08FC00F4C5C7 /* ALIENAppDelegate.m */,
 				8720A8A619AF08FC00F4C5C7 /* Main.storyboard */,
@@ -172,8 +176,6 @@
 				8720A8AA19AF08FC00F4C5C7 /* ALIENViewController.m */,
 				8720A8C919AF095500F4C5C7 /* ChatViewController.h */,
 				8720A8CA19AF095500F4C5C7 /* ChatViewController.m */,
-				8720A9FB19B0AD7000F4C5C7 /* ALIENKeyBoardView.h */,
-				8720A9FC19B0AD7000F4C5C7 /* ALIENKeyBoardView.m */,
 				8720A89B19AF08FC00F4C5C7 /* Supporting Files */,
 			);
 			path = ChatDemo;
@@ -243,6 +245,17 @@
 				87DF919D19B46BCB00597255 /* UIView+MJExtension.m */,
 			);
 			path = MJRefresh;
+			sourceTree = "<group>";
+		};
+		87E028C919B5727E00F8D432 /* InputAccessoryView */ = {
+			isa = PBXGroup;
+			children = (
+				8720A9FB19B0AD7000F4C5C7 /* ALIENKeyBoardView.h */,
+				8720A9FC19B0AD7000F4C5C7 /* ALIENKeyBoardView.m */,
+				87E028CD19B5CA8C00F8D432 /* ALIENVoiceRecordingView.h */,
+				87E028CE19B5CA8C00F8D432 /* ALIENVoiceRecordingView.m */,
+			);
+			name = InputAccessoryView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -359,6 +372,7 @@
 				87DF91A019B46BCB00597255 /* MJRefreshConst.m in Sources */,
 				87DF91A219B46BCB00597255 /* MJRefreshHeaderView.m in Sources */,
 				8720A8D719AF11D300F4C5C7 /* LMMessageFrame.m in Sources */,
+				87E028CF19B5CA8C00F8D432 /* ALIENVoiceRecordingView.m in Sources */,
 				8720A8D619AF11D300F4C5C7 /* LMMessage.m in Sources */,
 				87DF919F19B46BCB00597255 /* MJRefreshBaseView.m in Sources */,
 				8720A8CB19AF095500F4C5C7 /* ChatViewController.m in Sources */,
