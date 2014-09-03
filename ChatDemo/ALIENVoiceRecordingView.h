@@ -10,4 +10,5 @@
 
 @interface ALIENVoiceRecordingView : UIView
 
+@property (nonatomic,strong) UIView *RecordingView;
 @end

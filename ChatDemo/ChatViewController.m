@@ -13,13 +13,16 @@
 #import "ALIENKeyBoardView.h"
 #import "ALIENVoiceRecordingView.h"
 #import "MJRefresh.h"
+#import "ALIENMessageDataModel.h"
 
 @interface ChatViewController ()<UITableViewDataSource,UITableViewDelegate,keyBoardViewDelegate>
 
 @property (nonatomic,strong) UIView *bgView;
 
 @property (nonatomic,strong) UITableView *tableView;
-@property (nonatomic,strong) NSMutableArray *DataModel;
+
+@property (nonatomic,strong) NSMutableArray *DataModelArray;
+
 @property (nonatomic,strong) LMMessageFrame *messageFrame;
 @property (nonatomic,strong) LMMessageFrame *tempMessageFrame;
 @property (nonatomic,strong) LMMessage *message;
@@ -30,7 +33,6 @@
 @property (nonatomic,strong) NSMutableArray *cellMessageArray;
 @property (nonatomic,strong) ALIENKeyBoardView *keyboardView;
 
-@property (nonatomic,assign) NSTimeInterval duration;
 @property (nonatomic,assign) CGRect keyBoardHelpFrame;
 @property (nonatomic,assign) CGRect bgTempFrame;
 @property (nonatomic,assign) CGRect textViewTempFrame;
@@ -40,7 +42,7 @@
 
 
 @property (nonatomic,strong) ALIENVoiceRecordingView *recordingView;
-@property (nonatomic,assign) BOOL isBGViewFrameArised;
+
 @end
 
 
@@ -53,17 +55,28 @@ static const int keyBoardHeight = 44.0;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        _isBGViewFrameArised = NO;
+
     }
     return self;
 }
+
+#pragma mark - setter
+-(void)setImageStyleOfChatBackGround:(UIImage*)image
+{
+    if (image) {
+        self.chatBackGroundImageView.image = image;
+    }else{
+    self.chatBackGroundImageView.image = [UIImage imageNamed:@"scene"];
+    }
+    
+}
+
 #pragma mark -life cycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationController.navigationBar.barTintColor = [UIColor greenColor];
     
      self.view.backgroundColor = [UIColor whiteColor];
     
@@ -72,11 +85,10 @@ static const int keyBoardHeight = 44.0;
     [self.view addSubview:_bgView];
     
    
+    self.chatBackGroundImageView= [[UIImageView alloc] initWithFrame:self.view.bounds];
+    self.chatBackGroundImageView.image = [UIImage imageNamed:@"scene"];
+    [self.bgView addSubview:self.chatBackGroundImageView];
     
-    UIImageView *backGroundImage= [[UIImageView alloc] initWithFrame:self.view.bounds];
-    backGroundImage.image = [UIImage imageNamed:@"scene"];
-    
-    [self.bgView addSubview:backGroundImage];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height-keyBoardHeight) style:UITableViewStylePlain];
     
@@ -93,8 +105,6 @@ static const int keyBoardHeight = 44.0;
 //    
     self.keyboardView = [[ALIENKeyBoardView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height -keyBoardHeight, self.view.bounds.size.width, keyBoardHeight)];
     self.keyboardView.delegate =self;
-    self.keyboardView.backgroundColor = [UIColor whiteColor];
-    
     [self.bgView addSubview:self.keyboardView];
     
 }
@@ -104,8 +114,8 @@ static const int keyBoardHeight = 44.0;
     
     [self setupDataModel];
     
-
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.cellMessageArray.count -1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+
     [self registerForKeyboardNotifications];
     
     [self setupMJRefresh];
@@ -116,7 +126,7 @@ static const int keyBoardHeight = 44.0;
      _pullDownGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(needResignFirstResponer)];
     
     _recordingView = [[ALIENVoiceRecordingView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 216)];
-    _recordingView.backgroundColor = [UIColor redColor];
+
     
     [self needCacheCurrentLayouts];
 }
@@ -133,7 +143,7 @@ static const int keyBoardHeight = 44.0;
     for (int i = 0; i<5; i++) {
         //            [self.fakeData insertObject:MJRandomData atIndex:0];
         //            self setDataModel:<#(NSMutableArray *)#>
-        LMMessage *message = [[LMMessage alloc] initWithContent:self.DataModel[self.DataModel.count - i-1]];
+        LMMessage *message = [[LMMessage alloc] initWithContent:self.DataModelArray[self.DataModelArray.count - i-1]];
         [self.cellMessageArray insertObject:message atIndex:0];
         
         self.messageFrame.message = message;
@@ -237,7 +247,7 @@ static const int keyBoardHeight = 44.0;
 //            添加下滑手势
             [self.tableView addGestureRecognizer:self.pullDownGesture];
             
-            [self shoudCompletionDismissKeyboardView:NO ByTextViewTouch:NO];
+            [self shoudCompletionDismissKeyboardView:NO];
                
             [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                 
@@ -254,10 +264,7 @@ static const int keyBoardHeight = 44.0;
             self.recordingView.Frame = CGRectMake(0, self.bgView.bounds.size.height, 320, 216);
             [self.view addSubview:self.recordingView];
             [self.keyboardView.textView becomeFirstResponder];
-            [self shoudCompletionDismissKeyboardView:NO ByTextViewTouch:YES];
-            
-            
-
+            [self shoudCompletionDismissKeyboardView:NO];
         }
             
         default:
@@ -269,12 +276,12 @@ static const int keyBoardHeight = 44.0;
 }
 -(void)AlienTextViewDidBeginEditing
 {
-    NSLog(@"AlienTextViewDidBeginEditing");
+
     [self.recordingView removeFromSuperview];
     
     [self.keyboardView.textView becomeFirstResponder];
 
-    [self shoudCompletionDismissKeyboardView:NO ByTextViewTouch:YES];
+    [self shoudCompletionDismissKeyboardView:NO];
 }
 
 #pragma mark -手势下滑隐藏键盘
@@ -289,61 +296,10 @@ static const int keyBoardHeight = 44.0;
 #pragma mark - setup dataModel
 -(void)setupDataModel
 {
-    self.DataModel = [@[@{@"text":@"1",
-                          @"time":@"2014-08-29",
-                          @"avatar":@"1",
-                          @"messageType":@"1",
-                          },
-                    @{@"text":@"dada014-08-2014-08-2014-08-2014-08-2014-08-2014-08-2014-08-2014-08-2",
-                          @"time":@"2014-08-30",
-                          @"avatar":@"1",
-                          @"messageType":@"1"
-                          },
-                        @{@"text":@"3",
-                          @"time":@"2014-08-29",
-                          @"avatar":@"1",
-                          @"messageType":@"1"
-                          
-                          },
-                        @{@"text":@"4",
-                          @"time":@"2014-08-29",
-                          @"avatar":@"1",
-                          @"messageType":@"1"
-                          
-                          },
-                        @{@"text":@"5",
-                          @"time":@"2014-08-29",
-                          @"avatar":@"1",
-                          @"messageType":@"1"
-                          
-                          },
-                        @{@"text":@"6",
-                          @"time":@"2014-08-29",
-                          @"avatar":@"1",
-                          @"messageType":@"1"
-                          },
-                    @{@"text":@"dada014-08-2014-08-2014-08-2014-08-2014-08-2014-08-2014-08-2014-08-2",
-                          @"time":@"2014-08-30",
-                          @"avatar":@"1",
-                          @"messageType":@"1"
-                          },
-                        @{@"text":@"8",
-                          @"time":@"2014-08-29",
-                          @"avatar":@"1",
-                          @"messageType":@"0"
-                          
-                          },
-                        @{@"image":@"scene",
-                          @"time":@"2014-08-29",
-                          @"avatar":@"1",
-                          @"messageType":@"3"
-                          
-                          },
-                        @{@"image":@"scene",
-                          @"time":@"2014-08-29",
-                          @"avatar":@"1",
-                          @"messageType":@"2"
-                          }]mutableCopy];
+
+    self.dataModel = [[ALIENMessageDataModel alloc] initWithDataModel];
+
+    self.DataModelArray = self.dataModel.dataArray;
     
     self.cellHeightArray = [NSMutableArray array];
     self.cellMessageArray =[NSMutableArray array];
@@ -353,16 +309,17 @@ static const int keyBoardHeight = 44.0;
     self.tempMessageFrame = [[LMMessageFrame alloc] init];
     
     
-    [self.DataModel enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        _message = [[LMMessage alloc] initWithContent:self.DataModel[idx]];
+    [self.DataModelArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        _message = [[LMMessage alloc] initWithContent:self.DataModelArray[idx]];
         [self.cellMessageArray addObject:_message];
         
         _messageFrame.message = _message;
         [self.cellHeightArray addObject:@(_messageFrame.cellHeight)];
     }];
+    
 }
 
-#pragma mark -dataSource
+#pragma mark -table DataSource
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -376,15 +333,15 @@ static const int keyBoardHeight = 44.0;
     self.tempMessageFrame.message = self.cellMessageArray[indexPath.row];
     cell.messageFrame = self.tempMessageFrame;
     
-
     return cell;
 }
 
-#pragma mark -delegate
+#pragma mark -tableView Delegate
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat height = [self.cellHeightArray[indexPath.row] floatValue];
+    
     return height;
 }
 
@@ -394,63 +351,30 @@ static const int keyBoardHeight = 44.0;
     // Dispose of any resources that can be recreated.
 }
 
--(void)shoudCompletionDismissKeyboardView:(BOOL)shoudDismiss ByTextViewTouch:(BOOL)Touch
+-(void)shoudCompletionDismissKeyboardView:(BOOL)shoudDismiss
 {
-//    if (Touch) {
-//        _isBGViewFrameArised = !shoudDismiss;
-//        return;
-//    }
+
     if (shoudDismiss ==YES) {
         [UIView animateWithDuration:0.25 animations:^{
             self.bgView.frame = CGRectMake(0, 0, 320, self.view.frame.size.height);
-            _isBGViewFrameArised = NO;
+
         }];
     }else{
         [UIView animateWithDuration:0.25 animations:^{
             self.bgView.frame =CGRectMake(0, -216, 320, self.view.frame.size.height);
-            _isBGViewFrameArised = YES;
+
         }];
     }
-    
 }
-
-
 #pragma mark - keyboard action
 
 - (void)registerForKeyboardNotifications
 {
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(keyboardWasShown:)
-//                                                 name:UIKeyboardWillShowNotification object:nil];
-//    
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(keyboardWillBeHidden:)
-//                                                 name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidFrameBeChanged:) name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 
-//-(void)keyboardWasShown:(NSNotification*)notification
-//{
-//    
-//}
-//-(void)keyboardWillBeHidden:(NSNotification*)notification
-//{
-//    NSDictionary* info = [notification userInfo];
-//     _duration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-//
-//        [UIView animateWithDuration:_duration animations:^{
-//            self.bgView.frame = CGRectMake(0, 0, 320, self.view.frame.size.height);
-//        }];
-//    
-//    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
-//    self.tableView.contentInset = contentInsets;
-//    self.tableView.scrollIndicatorInsets = contentInsets;
-//        [self.tableView removeGestureRecognizer:_gesture];
-//}
-//
 -(void)keyboardDidFrameBeChanged:(NSNotification *)notification
 {
-
     if (self.keyboardView.textView.isFirstResponder) {
         
         NSDictionary* info = [notification userInfo];
@@ -459,12 +383,11 @@ static const int keyBoardHeight = 44.0;
         [self.tableView removeGestureRecognizer:self.pullDownGesture];
         [self.tableView addGestureRecognizer:self.pullDownGesture];
         
-        _duration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+        NSTimeInterval _duration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
 
         [UIView animateWithDuration:_duration animations:^{
             self.bgView.frame = CGRectMake(self.view.bounds.origin.x,self.view.bounds.origin.y - kbSize.height, self.view.bounds.size.width,self.view.bounds.size.height);
         }];
-        
     }
 }
 

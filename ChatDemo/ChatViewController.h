@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-
+@class ALIENMessageDataModel;
 
 @interface ChatViewController : UIViewController
 
+@property (nonatomic,strong) UIImageView *chatBackGroundImageView;
+@property (nonatomic,strong) ALIENMessageDataModel *dataModel;
+
+-(void)setImageStyleOfChatBackGround:(UIImage*)image;
 @end

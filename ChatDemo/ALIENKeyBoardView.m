@@ -36,6 +36,8 @@ static const float kFontSize = 16.0;
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        self.backgroundColor = [UIColor whiteColor];
+        
         self.frame = CGRectMake(frame.origin.x, frame.origin.y,frame.size.width, 44.0);
 //        切换声音或者文本按钮
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -63,14 +65,14 @@ static const float kFontSize = 16.0;
         UIButton *otherButton = [UIButton buttonWithType:UIButtonTypeCustom];
         otherButton.frame = CGRectMake(240, 4.5, 35.0, 35.0);
         [otherButton addTarget:self action:@selector(swapVoiceOrKeyBoardImage:) forControlEvents:UIControlEventTouchUpInside];
-        [otherButton setImage:[UIImage imageNamed:@"im_tab_voice"] forState:UIControlStateNormal];
+        [otherButton setImage:[UIImage imageNamed:@"im_tab_plus"] forState:UIControlStateNormal];
         otherButton.tag = inputViewTypeTagEmoj;
         [self addSubview:otherButton];
         
         UIButton *lastButton = [UIButton buttonWithType:UIButtonTypeCustom];
         lastButton.frame = CGRectMake(280, 4.5, 35.0, 35.0);
         [lastButton addTarget:self action:@selector(swapVoiceOrKeyBoardImage:) forControlEvents:UIControlEventTouchUpInside];
-        [lastButton setImage:[UIImage imageNamed:@"im_tab_voice"] forState:UIControlStateNormal];
+        [lastButton setImage:[UIImage imageNamed:@"im_tab_plus"] forState:UIControlStateNormal];
         lastButton.tag = inputViewTypeTagOther;
         [self addSubview:lastButton];
         
@@ -111,6 +113,11 @@ static inputViewTypeTag preTag;
         
     }else if(self.inputButton.tag ==inputViewTypeTagEmoj){
 //        图片或者其他
+        self.inputButton.tag = inputViewTypeTagKeyboard;
+        preTag = inputViewTypeTagEmoj;
+        [self.inputButton setImage:[UIImage imageNamed:@"im_tab_word"] forState:UIControlStateNormal];
+        
+        
     }else if (self.inputButton.tag ==inputViewTypeTagOther){
 //        图片或者其他
     }else if(self.inputButton.tag == inputViewTypeTagKeyboard){

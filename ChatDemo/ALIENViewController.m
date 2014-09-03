@@ -8,6 +8,7 @@
 
 #import "ALIENViewController.h"
 #import "ChatViewController.h"
+#import "SubChatVC.h"
 @interface ALIENViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 {
@@ -60,8 +61,10 @@ static NSString * reuserIdentifier = @"Cell";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    ChatViewController *chat = [self.storyboard instantiateViewControllerWithIdentifier:@"ChatViewController"];
-    chat.title =[NSString stringWithFormat:@"%ld",indexPath.row];
+//    ChatViewController *chat = [self.storyboard instantiateViewControllerWithIdentifier:@"ChatViewController"];
+//    chat.title =[NSString stringWithFormat:@"%ld",indexPath.row];
+    SubChatVC *chat = [[SubChatVC alloc] init];
+    
     [self.navigationController pushViewController:chat animated:YES];
     
 }

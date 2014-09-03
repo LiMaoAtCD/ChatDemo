@@ -39,6 +39,9 @@
 		87DF91A419B46BCB00597255 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DF919B19B46BCB00597255 /* UIScrollView+MJRefresh.m */; };
 		87DF91A519B46BCB00597255 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DF919D19B46BCB00597255 /* UIView+MJExtension.m */; };
 		87E028CF19B5CA8C00F8D432 /* ALIENVoiceRecordingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E028CE19B5CA8C00F8D432 /* ALIENVoiceRecordingView.m */; };
+		87E0292619B6F9B400F8D432 /* SubChatVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E0292519B6F9B400F8D432 /* SubChatVC.m */; };
+		87E0292919B6FCD500F8D432 /* ALIENMessageDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E0292819B6FCD500F8D432 /* ALIENMessageDataModel.m */; };
+		87E0292C19B7071600F8D432 /* im_tab_plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 87E0292B19B7071600F8D432 /* im_tab_plus.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,8 +73,8 @@
 		8720A8BB19AF08FD00F4C5C7 /* ChatDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ChatDemoTests-Info.plist"; sourceTree = "<group>"; };
 		8720A8BD19AF08FD00F4C5C7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8720A8BF19AF08FD00F4C5C7 /* ChatDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatDemoTests.m; sourceTree = "<group>"; };
-		8720A8C919AF095500F4C5C7 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
-		8720A8CA19AF095500F4C5C7 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
+		8720A8C919AF095500F4C5C7 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatViewController.h; path = ../ChatDemo/ChatViewController.h; sourceTree = "<group>"; };
+		8720A8CA19AF095500F4C5C7 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatViewController.m; path = ../ChatDemo/ChatViewController.m; sourceTree = "<group>"; };
 		8720A8D019AF11D300F4C5C7 /* LMMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMMessage.h; sourceTree = "<group>"; };
 		8720A8D119AF11D300F4C5C7 /* LMMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMMessage.m; sourceTree = "<group>"; };
 		8720A8D219AF11D300F4C5C7 /* LMMessageFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMMessageFrame.h; sourceTree = "<group>"; };
@@ -103,6 +106,11 @@
 		87DF919D19B46BCB00597255 /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
 		87E028CD19B5CA8C00F8D432 /* ALIENVoiceRecordingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALIENVoiceRecordingView.h; sourceTree = "<group>"; };
 		87E028CE19B5CA8C00F8D432 /* ALIENVoiceRecordingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALIENVoiceRecordingView.m; sourceTree = "<group>"; };
+		87E0292419B6F9B400F8D432 /* SubChatVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubChatVC.h; sourceTree = "<group>"; };
+		87E0292519B6F9B400F8D432 /* SubChatVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubChatVC.m; sourceTree = "<group>"; };
+		87E0292719B6FCD500F8D432 /* ALIENMessageDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALIENMessageDataModel.h; sourceTree = "<group>"; };
+		87E0292819B6FCD500F8D432 /* ALIENMessageDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALIENMessageDataModel.m; sourceTree = "<group>"; };
+		87E0292B19B7071600F8D432 /* im_tab_plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = im_tab_plus.png; path = ../im_tab_plus.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,14 +176,13 @@
 		8720A89A19AF08FC00F4C5C7 /* ChatDemo */ = {
 			isa = PBXGroup;
 			children = (
-				87E028C919B5727E00F8D432 /* InputAccessoryView */,
 				8720A8A319AF08FC00F4C5C7 /* ALIENAppDelegate.h */,
 				8720A8A419AF08FC00F4C5C7 /* ALIENAppDelegate.m */,
 				8720A8A619AF08FC00F4C5C7 /* Main.storyboard */,
 				8720A8A919AF08FC00F4C5C7 /* ALIENViewController.h */,
 				8720A8AA19AF08FC00F4C5C7 /* ALIENViewController.m */,
-				8720A8C919AF095500F4C5C7 /* ChatViewController.h */,
-				8720A8CA19AF095500F4C5C7 /* ChatViewController.m */,
+				87E0292419B6F9B400F8D432 /* SubChatVC.h */,
+				87E0292519B6F9B400F8D432 /* SubChatVC.m */,
 				8720A89B19AF08FC00F4C5C7 /* Supporting Files */,
 			);
 			path = ChatDemo;
@@ -185,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				8720A9EA19AF555A00F4C5C7 /* Images.xcassets */,
+				87E0292B19B7071600F8D432 /* im_tab_plus.png */,
 				8720A89C19AF08FC00F4C5C7 /* ChatDemo-Info.plist */,
 				8720A89D19AF08FC00F4C5C7 /* InfoPlist.strings */,
 				8720A8A019AF08FC00F4C5C7 /* main.m */,
@@ -214,12 +222,17 @@
 		8720A8CF19AF11D300F4C5C7 /* ChatHelper */ = {
 			isa = PBXGroup;
 			children = (
+				87E028C919B5727E00F8D432 /* InputAccessoryView */,
+				8720A8C919AF095500F4C5C7 /* ChatViewController.h */,
+				8720A8CA19AF095500F4C5C7 /* ChatViewController.m */,
 				8720A8D019AF11D300F4C5C7 /* LMMessage.h */,
 				8720A8D119AF11D300F4C5C7 /* LMMessage.m */,
 				8720A8D219AF11D300F4C5C7 /* LMMessageFrame.h */,
 				8720A8D319AF11D300F4C5C7 /* LMMessageFrame.m */,
 				8720A8D419AF11D300F4C5C7 /* LMTableViewCell.h */,
 				8720A8D519AF11D300F4C5C7 /* LMTableViewCell.m */,
+				87E0292719B6FCD500F8D432 /* ALIENMessageDataModel.h */,
+				87E0292819B6FCD500F8D432 /* ALIENMessageDataModel.m */,
 			);
 			path = ChatHelper;
 			sourceTree = "<group>";
@@ -256,6 +269,7 @@
 				87E028CE19B5CA8C00F8D432 /* ALIENVoiceRecordingView.m */,
 			);
 			name = InputAccessoryView;
+			path = ../ChatDemo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -338,6 +352,7 @@
 				8720A9EB19AF555A00F4C5C7 /* Images.xcassets in Resources */,
 				8720A9ED19AF6B5A00F4C5C7 /* 1.png in Resources */,
 				8720A89F19AF08FC00F4C5C7 /* InfoPlist.strings in Resources */,
+				87E0292C19B7071600F8D432 /* im_tab_plus.png in Resources */,
 				8720A9F319B06E9900F4C5C7 /* tal_box_bk_1@2x.png in Resources */,
 				8720A8A819AF08FC00F4C5C7 /* Main.storyboard in Resources */,
 				8720A9F119B068F100F4C5C7 /* tal_box_bk@2x.png in Resources */,
@@ -365,6 +380,7 @@
 				87DF91A519B46BCB00597255 /* UIView+MJExtension.m in Sources */,
 				87DF91A319B46BCB00597255 /* UIScrollView+MJExtension.m in Sources */,
 				8720A8D819AF11D300F4C5C7 /* LMTableViewCell.m in Sources */,
+				87E0292619B6F9B400F8D432 /* SubChatVC.m in Sources */,
 				8720A8A519AF08FC00F4C5C7 /* ALIENAppDelegate.m in Sources */,
 				87DF91A419B46BCB00597255 /* UIScrollView+MJRefresh.m in Sources */,
 				8720A8A119AF08FC00F4C5C7 /* main.m in Sources */,
@@ -377,6 +393,7 @@
 				87DF919F19B46BCB00597255 /* MJRefreshBaseView.m in Sources */,
 				8720A8CB19AF095500F4C5C7 /* ChatViewController.m in Sources */,
 				8720A8AB19AF08FC00F4C5C7 /* ALIENViewController.m in Sources */,
+				87E0292919B6FCD500F8D432 /* ALIENMessageDataModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
