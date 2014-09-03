@@ -163,11 +163,11 @@ static BOOL clickButton = NO;
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     if ([text isEqualToString:@"\n"]) {
-        textView.text = nil;
         
-        [textView resignFirstResponder];
-        if ([self.delegate respondsToSelector:@selector(didClickedSendButtonOnKeyboard)]) {
-            [self.delegate didClickedSendButtonOnKeyboard];
+//        [textView resignFirstResponder];
+        if ([self.delegate respondsToSelector:@selector(didClickedSendButtonOnKeyboard:)]) {
+            [self.delegate didClickedSendButtonOnKeyboard:textView.text];
+            textView.text = nil;
         }
         return NO;
     }else{

@@ -229,10 +229,40 @@ static const int keyBoardHeight = 44.0;
     }
 }
 
-
--(void)didClickedSendButtonOnKeyboard
+//点击发送消息
+-(void)didClickedSendButtonOnKeyboard:(NSString*)text
 {
-    [self restoreKeyboard];
+//    [self restoreKeyboard];
+    
+//
+//    MessageFromMe = 0, // 自己发的
+//    MessageFromOther, //别人发得
+//    ImageFromMe,
+//    ImageFromOther,
+//    AudioFromMe,
+//    AudioFromOther
+    LMMessage *message = [[LMMessage alloc] initWithContent:@{
+                                                              @"avatar":@"1",
+                                                              @"messageType":@"0",
+                                                              @"time":@"2014-09-03",
+                                                              @"text":text
+                                                              }];
+
+    LMMessageFrame *messageFrame = [[LMMessageFrame alloc] init];
+    messageFrame.message = message;
+    
+    [self.cellMessageArray addObject:message];
+    [self.cellHeightArray addObject:@(messageFrame.cellHeight)];
+    
+//    [self.tableView reloadData];
+//    
+//    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.cellMessageArray.count -1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    
+    [self.tableView beginUpdates];
+    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.cellMessageArray.count-1 inSection:0]] withRowAnimation:UITableViewRowAnimationBottom];
+    [self.tableView endUpdates];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.cellMessageArray.count -1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+
 }
 
 
@@ -339,7 +369,7 @@ static const int keyBoardHeight = 44.0;
         default:
             break;
         
-        
+
     }
 
 }

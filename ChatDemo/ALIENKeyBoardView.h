@@ -21,7 +21,7 @@ typedef NS_ENUM(NSUInteger, inputViewTypeTag) {
 
 -(void)didReceiveTheInputViewHeightChanged;
 -(void)didSwitchTextInputORVoiceInput:(inputViewTypeTag)inputType;
--(void)didClickedSendButtonOnKeyboard;
+-(void)didClickedSendButtonOnKeyboard:(NSString*)text;
 -(void)AlienTextViewDidBeginEditing;
 @end
 
