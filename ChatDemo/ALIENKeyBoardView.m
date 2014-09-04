@@ -20,13 +20,13 @@ static const float kImageWidth = 35.0;
 
 
 //textView background
-static const float ktextViewBGMarginToSuper = 8.0;
+static const float ktextViewBGMarginToSuper = 7.0;
 static const float ktextViewBGHeight = 28.0;
 static const float ktextViewBGWidth = 190.0;
 
 //textview & background view 间隔
 static const float kMarginTVAndBK_X = 2.0;
-static const float kMarginTVAndBK_Y = 3.0;
+//static const float kMarginTVAndBK_Y = 3.0;
 
 //textView font
 static const float kFontSize = 16.0;
@@ -49,15 +49,18 @@ static const float kFontSize = 16.0;
         
 //        点击输入文字或者开始录音
         
-       self.textViewBackgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kMarginX+kImageWidth+kMarginX, ktextViewBGMarginToSuper, ktextViewBGWidth, ktextViewBGHeight)];
+//       self.textViewBackgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kMarginX+kImageWidth+kMarginX, ktextViewBGMarginToSuper, ktextViewBGWidth, ktextViewBGHeight)];
+//        
+//         self.textViewBackgroundImageView.image = [[UIImage imageNamed:@"im_box1"] resizableImageWithCapInsets:UIEdgeInsetsMake(24, 150, 15, 150) resizingMode:UIImageResizingModeStretch];
+//
+//        [self addSubview:self.textViewBackgroundImageView];
         
-         self.textViewBackgroundImageView.image = [[UIImage imageNamed:@"im_box1"] resizableImageWithCapInsets:UIEdgeInsetsMake(24, 150, 24, 150) resizingMode:UIImageResizingModeStretch];
 
-        [self addSubview:self.textViewBackgroundImageView];
-        
-
-        self.textView = [[UITextView alloc] initWithFrame:CGRectMake(kMarginX+kImageWidth+kMarginX+kMarginTVAndBK_X, ktextViewBGMarginToSuper+kMarginTVAndBK_Y, ktextViewBGWidth- 1.5*kMarginTVAndBK_X, ktextViewBGHeight- 2*kMarginTVAndBK_Y) textContainer:nil];
-
+        self.textView = [[UITextView alloc] initWithFrame:CGRectMake(kMarginX+kImageWidth+kMarginX+kMarginTVAndBK_X, ktextViewBGMarginToSuper, ktextViewBGWidth- 1.5*kMarginTVAndBK_X, 30.) textContainer:nil];
+        [self.textView.layer setBorderWidth:1.0];
+        self.textView.layer.cornerRadius = 3.0;
+        self.textView.layer.masksToBounds = YES;
+        [self.textView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
         self.textView.delegate = self;
         self.textView.font = [UIFont systemFontOfSize:kFontSize];
         self.textView.returnKeyType = UIReturnKeySend;
@@ -164,20 +167,22 @@ static BOOL clickButton = NO;
 {
     if ([text isEqualToString:@"\n"]) {
         
-//        [textView resignFirstResponder];
-        if ([self.delegate respondsToSelector:@selector(didClickedSendButtonOnKeyboard:)]) {
+//        点击发送
+        
+        if ([self.delegate respondsToSelector:@selector(didClickedSendButtonOnKeyboard:)]&&
+            ![textView.text isEqualToString:@""]) {
+            
             [self.delegate didClickedSendButtonOnKeyboard:textView.text];
             textView.text = nil;
         }
         return NO;
-    }else{
-        if ([self.delegate respondsToSelector:@selector(didReceiveTheInputViewHeightChanged)]) {
-            [self.delegate didReceiveTheInputViewHeightChanged];
-        }
-        return YES;
     }
+    
+    return YES;
+    
 
 }
+
 //开始textview 编辑
 
 -(void)textViewDidBeginEditing:(UITextView *)textView
@@ -192,5 +197,17 @@ static BOOL clickButton = NO;
         [self.delegate AlienTextViewDidBeginEditing];
     }
 }
+
+
+//输入变化改变高度
+
+-(void)textViewDidChange:(UITextView *)textView
+{
+    
+    if ([self.delegate respondsToSelector:@selector(didReceiveTheInputViewHeightChanged)]) {
+        [self.delegate didReceiveTheInputViewHeightChanged];
+    }
+}
+
 
 @end

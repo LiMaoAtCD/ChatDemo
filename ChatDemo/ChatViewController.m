@@ -26,9 +26,8 @@
 
 @property (nonatomic,strong) NSMutableArray *DataModelArray;
 
-@property (nonatomic,strong) LMMessageFrame *messageFrame;
+
 @property (nonatomic,strong) LMMessageFrame *tempMessageFrame;
-@property (nonatomic,strong) LMMessage *message;
 
 
 
@@ -149,13 +148,14 @@ static const int keyBoardHeight = 44.0;
     // 1.添加数据
     for (int i = 0; i<5; i++) {
         //            [self.fakeData insertObject:MJRandomData atIndex:0];
-        //            self setDataModel:<#(NSMutableArray *)#>
+        //            self setDataModel
         LMMessage *message = [[LMMessage alloc] initWithContent:self.DataModelArray[self.DataModelArray.count - i-1]];
         [self.cellMessageArray insertObject:message atIndex:0];
         
-        self.messageFrame.message = message;
+        LMMessageFrame *messageFrame = [[LMMessageFrame alloc] init];
+        messageFrame.message = message;
         
-        [self.cellHeightArray insertObject:@(self.messageFrame.cellHeight) atIndex:0];
+        [self.cellHeightArray insertObject:@(messageFrame.cellHeight) atIndex:0];
         
     }
     
@@ -208,11 +208,10 @@ static const int keyBoardHeight = 44.0;
 -(void)didReceiveTheInputViewHeightChanged
 {
 //    计算行数
-    
-    int numberofLine = (self.keyboardView.textView.contentSize.height)/self.keyboardView.textView.font.lineHeight;
-    
     CGFloat textViewHeight = self.keyboardView.textView.font.lineHeight;
-
+    
+    int numberofLine = (self.keyboardView.textView.contentSize.height)/textViewHeight;
+    
     if (numberofLine<4) {
         
         [UIView animateWithDuration:0.01 animations:^{
@@ -223,9 +222,12 @@ static const int keyBoardHeight = 44.0;
 //            3
             self.keyboardView.textView.frame =CGRectMake(self.textViewTempFrame.origin.x, self.textViewTempFrame.origin.y, self.textViewTempFrame.size.width, self.textViewTempFrame.size.height+(numberofLine-1)*textViewHeight);
 //            4
-            self.keyboardView.textViewBackgroundImageView.frame = CGRectMake(self.textViewImageTempFrame.origin.x, self.textViewImageTempFrame.origin.y, self.textViewImageTempFrame.size.width, self.textViewImageTempFrame.size.height + (numberofLine-1)*textViewHeight);
+//            self.keyboardView.textViewBackgroundImageView.frame = CGRectMake(self.textViewImageTempFrame.origin.x, self.textViewImageTempFrame.origin.y, self.textViewImageTempFrame.size.width, self.textViewImageTempFrame.size.height + (numberofLine-1)*textViewHeight);
         } completion:^(BOOL finished) {
         }];
+        
+        
+        
     }
 }
 
@@ -241,6 +243,7 @@ static const int keyBoardHeight = 44.0;
 //    ImageFromOther,
 //    AudioFromMe,
 //    AudioFromOther
+    
     LMMessage *message = [[LMMessage alloc] initWithContent:@{
                                                               @"avatar":@"1",
                                                               @"messageType":@"0",
@@ -254,9 +257,6 @@ static const int keyBoardHeight = 44.0;
     [self.cellMessageArray addObject:message];
     [self.cellHeightArray addObject:@(messageFrame.cellHeight)];
     
-//    [self.tableView reloadData];
-//    
-//    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.cellMessageArray.count -1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     
     [self.tableView beginUpdates];
     [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.cellMessageArray.count-1 inSection:0]] withRowAnimation:UITableViewRowAnimationBottom];
@@ -405,16 +405,16 @@ static const int keyBoardHeight = 44.0;
     self.cellMessageArray =[NSMutableArray array];
     
     
-    _messageFrame = [[LMMessageFrame alloc] init];
+    LMMessageFrame* messageFrame = [[LMMessageFrame alloc] init];
     self.tempMessageFrame = [[LMMessageFrame alloc] init];
     
     
     [self.DataModelArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        _message = [[LMMessage alloc] initWithContent:self.DataModelArray[idx]];
-        [self.cellMessageArray addObject:_message];
+        LMMessage* message = [[LMMessage alloc] initWithContent:self.DataModelArray[idx]];
+        [self.cellMessageArray addObject:message];
         
-        _messageFrame.message = _message;
-        [self.cellHeightArray addObject:@(_messageFrame.cellHeight)];
+        messageFrame.message = message;
+        [self.cellHeightArray addObject:@(messageFrame.cellHeight)];
     }];
     
 }
