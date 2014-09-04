@@ -8,6 +8,10 @@
 
 #define kMargin 10.0         //间隔
 #define kIconWH 40.0         //头像宽高
+
+#define kNameWidth 40.0        //名字宽度
+#define kNameHeight 30.0        //名字高度
+
 #define kContentW 180.0      //内容宽度
 
 #define kTimeMarginW 15.0    //时间文本与边框间隔宽度方向

@@ -117,7 +117,7 @@ static const int keyBoardHeight = 44.0;
     
     [self setupDataModel];
     
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.cellMessageArray.count -1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+//    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.cellMessageArray.count -1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
 
     [self registerForKeyboardNotifications];
     
@@ -178,7 +178,7 @@ static const int keyBoardHeight = 44.0;
     self.keyBoardHelpFrame = self.keyboardView.frame;
     self.bgTempFrame = self.tableView.frame;
     self.textViewTempFrame = self.keyboardView.textView.frame;
-    self.textViewImageTempFrame = self.keyboardView.textViewBackgroundImageView.frame;
+//    self.textViewImageTempFrame = self.keyboardView.textViewBackgroundImageView.frame;
 }
 
 //重装键盘视图
@@ -190,11 +190,13 @@ static const int keyBoardHeight = 44.0;
         self.tableView.frame= self.bgTempFrame;
         self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
         self.keyboardView.textView.frame= self.textViewTempFrame;
-        self.keyboardView.textViewBackgroundImageView.frame= self.textViewImageTempFrame;
+//        self.keyboardView.textViewBackgroundImageView.frame= self.textViewImageTempFrame;
         self.bgView.frame = CGRectMake(self.view.bounds.origin.x,self.view.bounds.origin.y, self.view.bounds.size.width,self.view.bounds.size.height);
 
     } completion:^(BOOL finished) {
         if (finished) {
+            [self.emojiView removeFromSuperview];
+            [self.addtionView removeFromSuperview];
             self.keyboardView.textView.text = nil;
             [self.keyboardView.textView resignFirstResponder];
             [self.recordingView removeFromSuperview];

@@ -13,7 +13,7 @@
 @interface LMTableViewCell()
 {
     UIButton     *_timeBtn;
-    UILabel      *_name;
+    UILabel      *name;
     UIImageView  *avatar;
     UIImageView *contentImage;
     UIButton    *_contentBtn;
@@ -45,6 +45,13 @@
 
         // 2、创建头像
         avatar = [[UIImageView alloc] init];
+//        2.1 名字
+        name = [[UILabel alloc] initWithFrame:CGRectZero];
+        name.textAlignment = NSTextAlignmentCenter;
+        name.font = [UIFont systemFontOfSize:12.0];
+        name.textColor = [UIColor lightGrayColor];
+        
+        
 
         // 3、创建内容
         _contentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -63,6 +70,8 @@
 
 - (void)setMessageFrame:(LMMessageFrame *)messageFrame{
     
+    
+    
     _messageFrame = messageFrame;
     LMMessage *message = _messageFrame.message;
 //     1、设置时间
@@ -73,12 +82,16 @@
 //     2、设置头像
     avatar.image = message.avatar;
     avatar.frame = _messageFrame.avatarFrame;
-    avatar.layer.cornerRadius = _messageFrame.avatarFrame.size.height>_messageFrame.avatarFrame.size.width?_messageFrame.avatarFrame.size.height/2:_messageFrame.avatarFrame.size.width/2;
+//    avatar.layer.cornerRadius = _messageFrame.avatarFrame.size.height>_messageFrame.avatarFrame.size.width?_messageFrame.avatarFrame.size.height/2:_messageFrame.avatarFrame.size.width/2;
+    avatar.layer.cornerRadius = 3.0;
     avatar.layer.masksToBounds = YES;
     
     [self.contentView addSubview:avatar];
-
     
+//    2.1 名字
+    name.text = message.name;
+    name.frame = _messageFrame.nameFrame;
+    [self.contentView addSubview:name];
 //     3、设置内容
     switch (message.messageType) {
         case MessageFromMe:
@@ -160,51 +173,62 @@
         case AudioFromMe:
         {
             _contentBtn.tag = AudioFromMe;
-//            _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentLeft, kContentBottom, kContentRight);
-            _contentBtn.frame = CGRectMake(_messageFrame.contentFrame.origin.x+80, _messageFrame.contentFrame.origin.y+2, 200, 40);
+               _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentImageTop, kContentImageLeft+2, kContentImageBottom, kContentImageRight);
+            [self setCellContent:message on:_contentBtn];
+             _contentBtn.frame = _messageFrame.contentFrame;
             
-            UIImage *normal;
-            UIImageView * img =[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 107, 35)];
-            normal = [UIImage imageNamed:@"IMFromMe"];
-            [img setImage:normal];
-
-            
-            NSArray* myImages = [NSArray arrayWithObjects:
-                                 [UIImage imageNamed:@"im_my_talk_1"],
-                                 [UIImage imageNamed:@"im_my_talk_2"],
-                                 [UIImage imageNamed:@"im_my_talk_3"],nil];
-            img.animationImages = myImages;
+//            [_contentBtn.subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//                UIImageView *audioImageView = (UIImageView *)obj;
+//                [audioImageView removeFromSuperview];
+//            }];
+//            _contentBtn.frame = _messageFrame.contentFrame;
+//            
+//            UIImageView * img =[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"im_tab_voice"]];
+//            img.frame = CGRectMake(0, 0, 75, 35);
             
             
-            img.animationDuration = 0.45;//设置动画时间
-            img.animationRepeatCount = 3;//设置动画次数 0 表示无限
-            [img setTag:3];
-            [_contentBtn addSubview:img];
+//            NSArray* myImages = [NSArray arrayWithObjects:
+//                                 [UIImage imageNamed:@"im_my_talk_1"],
+//                                 [UIImage imageNamed:@"im_my_talk_2"],
+//                                 [UIImage imageNamed:@"im_my_talk_3"],nil];
+//            img.animationImages = myImages;
+//            
+//            
+//            img.animationDuration = 0.45;//设置动画时间
+//            img.animationRepeatCount = 3;//设置动画次数 0 表示无限
+//            [img setTag:3];
+//            [_contentBtn addSubview:img];
+            
+            UIImage *backGroundImage =[UIImage imageNamed:@"tal_box_bk_1"];
+            UIEdgeInsets insets =UIEdgeInsetsMake(18, 7, 5, 19);
+            backGroundImage = [backGroundImage resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
+            
+            //            设置背景颜色（一张图片）
+            [_contentBtn setBackgroundImage:backGroundImage forState:UIControlStateNormal];
         }
             break;
         case AudioFromOther:
         {
-//            _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentLeft, kContentBottom, kContentRight);
-            _contentBtn.frame = CGRectMake(_messageFrame.contentFrame.origin.x-45, _messageFrame.contentFrame.origin.y, 200, 35);
-            [[_contentBtn viewWithTag:911] removeFromSuperview];
-            UIImage *normal ;
-            UIImageView * img =[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 107, 35)];
-            normal = [UIImage imageNamed:@"im_talk_3"];
-            normal = [normal stretchableImageWithLeftCapWidth:normal.size.width * 0.5 topCapHeight:normal.size.height * 0.7];
-            [img setImage:normal];
+            _contentBtn.tag = AudioFromOther;
+            [self setCellContent:message on:_contentBtn];
+               _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentImageTop, kContentImageLeft+2, kContentImageBottom, kContentImageRight);
+//            [_contentBtn.subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//                UIImageView *audioImageView = (UIImageView *)obj;
+//                [audioImageView removeFromSuperview];
+//            }];
 
+            _contentBtn.frame = _messageFrame.contentFrame;
+
+//            UIImageView * img =[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"im_tab_voice"]];
+//            img.frame = CGRectMake(0, 0, 75, 35);
+//            [_contentBtn addSubview:img];
             
-            NSArray* myImages = [NSArray arrayWithObjects:
-                        [UIImage imageNamed:@"im_talk_1"],
-                        [UIImage imageNamed:@"im_talk_2"],
-                        [UIImage imageNamed:@"im_talk_3"],nil];
-            img.animationImages = myImages;
             
-            
-            img.animationDuration = 0.45;//设置动画时间
-            img.animationRepeatCount = 3;//设置动画次数 0 表示无限
-            [img setTag:3];
-            [_contentBtn addSubview:img];
+            UIImage *normal=[UIImage imageNamed:@"tal_box_bk"];
+            UIEdgeInsets insets = UIEdgeInsetsMake(18, 19, 5, 7);
+            normal = [normal resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
+            [_contentBtn setBackgroundImage:normal forState:UIControlStateNormal];
+
         }
             break;
 
@@ -246,15 +270,20 @@
 
 
 -(void)setCellContent:(LMMessage*)message on:(UIButton*)button{
+    
     if (button.tag == MessageFromMe||
         button.tag == MessageFromOther) {
         [button setTitle:message.text forState:UIControlStateNormal];
         [button setImage:nil forState:UIControlStateNormal];
-    }else if(button.tag ==ImageFromMe||
+    }else if(button.tag == ImageFromMe||
              button.tag == ImageFromOther ){
         [button setTitle:nil forState:UIControlStateNormal];
         [button setImage:message.image forState:UIControlStateNormal];
 
+    }else if (button.tag == AudioFromMe||
+              button.tag == AudioFromOther){
+    [button setTitle:nil forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"im_tab_voice"] forState:UIControlStateNormal];
     }
 }
 

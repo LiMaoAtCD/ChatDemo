@@ -27,7 +27,6 @@ typedef NS_ENUM(NSUInteger, inputViewTypeTag) {
 
 @interface ALIENKeyBoardView : UIView<UITextViewDelegate>
 
-@property (nonatomic,strong) UIImageView *textViewBackgroundImageView;
 @property (nonatomic,strong) UITextView * textView ;
 @property (nonatomic,weak)id<keyBoardViewDelegate> delegate;
 

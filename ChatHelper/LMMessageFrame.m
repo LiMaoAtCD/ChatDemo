@@ -19,7 +19,7 @@
     // 0、获取屏幕宽度
     
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
-    
+
     // 1、计算时间的位置
 
     if(_message.time){
@@ -50,6 +50,13 @@
         iconY = CGRectGetMaxY(_timeFrame) + kMargin;
         _avatarFrame = CGRectMake(iconX, iconY, kIconWH, kIconWH);
     }
+//    2.2 计算名字位置
+    if (_message.name) {
+        CGFloat nameX = kMargin;
+        CGFloat nameY = iconY+kIconWH;
+        _nameFrame = CGRectMake(nameX, nameY, kNameWidth, kNameHeight);
+    }
+    
     // 3、计算内容位置
     
     switch (_message.messageType) {
@@ -116,13 +123,24 @@
         }
             break;
         case AudioFromMe:{
-            _contentFrame = CGRectMake(80, iconY, 100, 20);
+            CGSize contentSize = [UIImage imageNamed:@"im_tab_voice"].size;
+            CGFloat contentX = CGRectGetMaxX(_avatarFrame) + kMargin;
+            CGFloat contentY ;
+            
+            contentY = iconY;
+            
+            _contentFrame = CGRectMake(contentX, contentY, contentSize.width + kContentLabelLeft + kContentLabelRight+kContentImageLeft+kContentImageRight, contentSize.height + kContentLabelTop + kContentLabelBottom);
         }
             break;
             
         case AudioFromOther:{
+            CGSize contentSize = [UIImage imageNamed:@"im_tab_voice"].size;
+            CGFloat contentX = CGRectGetMaxX(_avatarFrame) + kMargin;
+            CGFloat contentY ;
             
-            _contentFrame = CGRectMake(100, iconY, 100, 20);
+            contentY = iconY;
+            
+            _contentFrame = CGRectMake(contentX, contentY, contentSize.width + kContentLabelLeft + kContentLabelRight+kContentImageLeft+kContentImageRight, contentSize.height + kContentLabelTop + kContentLabelBottom);
         }
             break;
             

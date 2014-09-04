@@ -30,8 +30,9 @@ typedef enum {
 @property (nonatomic, copy) NSString *originalImageUrl;
 @property (nonatomic, assign) MessageType messageType;
 
-//@property (nonatomic, copy) NSString *name;
-//@property (nonatomic, assign) BOOL isGroup;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, assign) BOOL isGroupChat;
+
 
 @property (nonatomic, strong) NSDictionary *dictionary;
 

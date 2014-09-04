@@ -35,6 +35,13 @@
     if (!self) {
         self = [[LMMessage alloc] init];
     }
+//    名字
+    if (dictionary[@"name"]) {
+        self.name = dictionary[@"name"];
+        self.isGroupChat = YES;
+    }else{
+        self.isGroupChat = NO;
+    }
     
 //    头像
     NSString *avatarName = dictionary[@"avatar"];
@@ -53,18 +60,24 @@
     if (dictionary[@"time"]) {
         self.time = dictionary[@"time"];
     }
-// 如果是文字
+
     
     if (dictionary[@"text"]) {
+        // 如果是文字
         self.text = dictionary[@"text"];
-    }
-//如果是图片
-    if(dictionary[@"image"]){
+    } else if(dictionary[@"image"]){
+        //如果是图片
 #warning 此处应该改为图片URL地址
         NSString *imageString =  dictionary[@"image"];
         self.image = [UIImage imageNamed:imageString];
         self.originalImageUrl  = dictionary[@"originalImageUrl"];
     }
+    if (dictionary[@"audio"]) {
+        // 如果是语音
+        self.audioData = dictionary[@"audio"];
+        
+    }
+    
     
     return self;
 }
