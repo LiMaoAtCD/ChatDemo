@@ -199,6 +199,7 @@
 //            [img setTag:3];
 //            [_contentBtn addSubview:img];
             
+            //            添加背景
             UIImage *backGroundImage =[UIImage imageNamed:@"tal_box_bk_1"];
             UIEdgeInsets insets =UIEdgeInsetsMake(18, 7, 5, 19);
             backGroundImage = [backGroundImage resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
@@ -280,10 +281,12 @@
         [button setTitle:nil forState:UIControlStateNormal];
         [button setImage:message.image forState:UIControlStateNormal];
 
-    }else if (button.tag == AudioFromMe||
-              button.tag == AudioFromOther){
+    }else if (button.tag == AudioFromOther){
     [button setTitle:nil forState:UIControlStateNormal];
     [button setImage:[UIImage imageNamed:@"im_tab_voice"] forState:UIControlStateNormal];
+    }else{
+        [button setTitle:nil forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"im_tab_voice"] forState:UIControlStateNormal];
     }
 }
 

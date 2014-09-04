@@ -49,11 +49,13 @@
                            @{
                                @"audio":[NSData data],
                                @"avatar":@"scene",
+                               @"time":@"2014-08-29",
                                @"messageType":@(AudioFromOther),
                             },
                            @{
                                @"audio":[NSData data],
                                @"avatar":@"scene",
+                               @"time":@"2014-08-29",
                                @"messageType":@(AudioFromMe),
                             },
                     

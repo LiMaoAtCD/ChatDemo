@@ -124,12 +124,15 @@
             break;
         case AudioFromMe:{
             CGSize contentSize = [UIImage imageNamed:@"im_tab_voice"].size;
-            CGFloat contentX = CGRectGetMaxX(_avatarFrame) + kMargin;
+//            CGFloat contentX = iconX - CGRectGetMaxX(_avatarFrame) + kMargin;
+            CGFloat contentX = iconX - contentSize.width - kMargin;
             CGFloat contentY ;
             
             contentY = iconY;
             
-            _contentFrame = CGRectMake(contentX, contentY, contentSize.width + kContentLabelLeft + kContentLabelRight+kContentImageLeft+kContentImageRight, contentSize.height + kContentLabelTop + kContentLabelBottom);
+            _contentFrame = CGRectMake(contentX, contentY, contentSize.width, contentSize.height);
+            
+
         }
             break;
             
@@ -140,7 +143,7 @@
             
             contentY = iconY;
             
-            _contentFrame = CGRectMake(contentX, contentY, contentSize.width + kContentLabelLeft + kContentLabelRight+kContentImageLeft+kContentImageRight, contentSize.height + kContentLabelTop + kContentLabelBottom);
+            _contentFrame = CGRectMake(contentX, contentY, contentSize.width, contentSize.height);
         }
             break;
             
